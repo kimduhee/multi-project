@@ -2,8 +2,9 @@ package com.framework.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages= "com.framework.web")
 public class WebAppApplication {
     public static void main(String[] args) {
         System.setProperty("spring.config.name", "application,application-web");

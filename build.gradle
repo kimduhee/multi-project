@@ -94,13 +94,13 @@ subprojects {
 
 }
 
-project("web") {
+project("module-web") {
 	dependencies {
-		implementation project(":common")
+		implementation project(":module-common")
 	}
 }
 
-project(":common") {
+project(":module-common") {
 //	val jar: Jar by tasks
 //	val bootJar: BootJar by tasks
 
