@@ -1,7 +1,3 @@
-plugins {
-    id 'java-library'
-}
-
 bootJar.enabled = false
 jar.enabled = true
 
@@ -15,4 +11,5 @@ dependencies {
     //springfox는 은 json data의 key/value값이 동일한 색, springdoc은 key/value값을 달리하여 식별하기 편함
     //springdoc 사용시 3이전 버전은 springdoc-openapi-ui 로 3버전 부터는 springdoc-openapi-starter-webmvc-ui 사용
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }

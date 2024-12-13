@@ -1,10 +1,3 @@
-plugins {
-    id 'java-library'
-}
-
-//tasks.named('bootJar') { enabled = false }
-//tasks.named('jar') { enabled = true }
-
 bootJar.enabled = false
 jar.enabled = true
 
@@ -19,4 +12,5 @@ dependencies {
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.apache.commons:commons-lang3:3.11'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
 }
