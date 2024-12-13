@@ -1,0 +1,22 @@
+plugins {
+    id 'java-library'
+}
+
+//tasks.named('bootJar') { enabled = false }
+//tasks.named('jar') { enabled = true }
+
+bootJar.enabled = false
+jar.enabled = true
+
+group 'com.framework'
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    compileOnly project(":module-common")
+
+    //JWT 토큰
+    implementation 'io.jsonwebtoken:jjwt:0.12.3'
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.apache.commons:commons-lang3:3.11'
+}

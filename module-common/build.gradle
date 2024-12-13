@@ -2,12 +2,17 @@ plugins {
     id 'java-library'
 }
 
-tasks.named('bootJar') { enabled = false }
-tasks.named('jar') { enabled = true }
+bootJar.enabled = false
+jar.enabled = true
 
 group 'com.framework'
 version '0.0.1-SNAPSHOT'
 
 dependencies {
-
+    //swagger 의존성
+    //springfox와 springdoc 차이전
+    //springfox는 2020년 7월 이후로 업데이트 중단, springdoc은 지속적으로 업데이트 중
+    //springfox는 은 json data의 key/value값이 동일한 색, springdoc은 key/value값을 달리하여 식별하기 편함
+    //springdoc 사용시 3이전 버전은 springdoc-openapi-ui 로 3버전 부터는 springdoc-openapi-starter-webmvc-ui 사용
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 }

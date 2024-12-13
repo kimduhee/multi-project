@@ -1,0 +1,16 @@
+spring:
+
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: 'jdbc:h2:mem:testdb'
+      username: sa
+      password:
+
+  # 임베디드 h2 콘솔을 사용하기 위한 정의
+  h2:
+    console:
+      # console 사용 여부
+      enabled: true
+      # 접속주소(http://localhost:{port}/h2-console)
+      path: /h2-console

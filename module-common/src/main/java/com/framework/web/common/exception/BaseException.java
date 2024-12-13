@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public class BaseException extends RuntimeException{
 
-    protected String errCode = "ERRCM000000";
+    protected String errCode = "ERRCOMCM000000";
     protected String errMessage = "";
     protected Object[] args;
 

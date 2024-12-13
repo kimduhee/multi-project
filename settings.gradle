@@ -1,4 +1,6 @@
 rootProject.name = 'multi-module'
 include 'module-web'
 include 'module-common'
+include 'module-security'
+include 'module-h2'
 

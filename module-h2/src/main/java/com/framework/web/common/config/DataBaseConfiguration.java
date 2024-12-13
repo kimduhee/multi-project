@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 @Configuration
 @Lazy
-@PropertySource("classpath:/application-${spring.profiles.active}.yml")
+@PropertySource("classpath:/application-h2-${spring.profiles.active}.yml")
 public class DataBaseConfiguration {
 
     private final ApplicationContext applicationContext;

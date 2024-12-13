@@ -3,7 +3,7 @@ package com.framework.web.common.exception;
 public class BizException extends BaseException{
 
     public BizException() {
-        super("ERRCM000000");
+        super("ERRCOMM000000");
     }
 
     public BizException(String errCode) {
