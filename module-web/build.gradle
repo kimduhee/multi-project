@@ -5,8 +5,8 @@ plugins {
 tasks.named('bootJar') { enabled = true }
 tasks.named('jar') { enabled = false }
 
-group = 'com.framework'
-version = '0.0.1-SNAPSHOT'
+group 'com.framework'
+version '0.0.1-SNAPSHOT'
 
 dependencies {
     implementation project(':module-common')
