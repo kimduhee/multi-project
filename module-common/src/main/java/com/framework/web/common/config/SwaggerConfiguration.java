@@ -1,22 +1,26 @@
 package com.framework.web.common.config;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
+
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Swagger 설정
+ */
+@OpenAPIDefinition(
+        info = @Info(
+                title = "API Test",
+                description = "Swagger UI",
+                version = "1.0.0")
+)
 @Configuration
-//@EnableSwagger2
 public class SwaggerConfiguration {
-//
-//    public SwaggerConfiguration(MappingJackson2HttpMessageConverter converter) {
-//        var supportedMediaTypes = new ArrayList<>(converter.getSupportedMediaTypes());
-//        supportedMediaTypes.add(new MediaType("application", "json"));
-//        converter.setSupportedMediaTypes(supportedMediaTypes);
-//    }
 
     @Bean
     public OpenAPI openAPI() {
@@ -30,16 +34,8 @@ public class SwaggerConfiguration {
         );
         return new OpenAPI()
                 .components(new Components())
-                .info(apiInfo())
+                //.info(apiInfo())
                 .addSecurityItem(securityRequirement)
                 .components(components);
     }
-
-    private Info apiInfo() {
-        return new Info()
-                .title("API Test") // API의 제목
-                .description("Swagger UI") // API에 대한 설명
-                .version("1.0.0"); // API의 버전
-    }
-
 }
