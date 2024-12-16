@@ -8,8 +8,8 @@ jwt:
   #로그인 후 토큰인증이 필요없는 url
   excluding-check:
     equals-url: /login
-    start-with-url: /v1/api/join/,/swagger-ui/,/v3/api-docs
+    start-with-url: /v1/api/join/,/swagger-ui/,/v3/api-docs,/error/
 
 auth:
   excluding-check:
-    pattern: /login,/v1/view/join/**,/v1/api/join/**,/,/error/**,/swagger-ui/**,/swagger-ui/**,/favicon.ico
+    pattern: /login,/v1/view/join/**,/v1/api/join/**,/,/error/**,/swagger-ui/**,/favicon.ico,/v3/api-docs/**

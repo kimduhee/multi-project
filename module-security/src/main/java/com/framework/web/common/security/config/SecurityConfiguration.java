@@ -67,23 +67,23 @@ public class SecurityConfiguration {
 
         String[] authPatternArr = authPattern.split(",");
 
+        if(log.isInfoEnabled()) {
+            log.info("************************************");
+            log.info("* Allow path List");
+        }
         //인가처리에서 제외 될 패턴
         MvcRequestMatcher[] permitAllWhiteList = new MvcRequestMatcher[authPatternArr.length];
         int index = 0;
         for(String arr : authPatternArr) {
+            if(log.isInfoEnabled()) {
+                log.info("* - {}", arr);
+            }
             permitAllWhiteList[index] = mvc.pattern(arr);
             index++;
         }
-//        MvcRequestMatcher[] permitAllWhiteList = {
-//            mvc.pattern("/login"),
-//            mvc.pattern("/v1/view/join/**"),
-//            mvc.pattern("/v1/api/join/**"),
-//            mvc.pattern("/"),
-//            mvc.pattern("/error/**"),
-//            mvc.pattern("/swagger-ui/**"),
-//            mvc.pattern("/swagger-ui/**"),
-//            mvc.pattern("/favicon.ico")
-//        };
+        if(log.isInfoEnabled()) {
+            log.info("************************************");
+        }
 
         http
                 //CSRF 정책 설정
@@ -149,9 +149,6 @@ public class SecurityConfiguration {
             protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
                 boolean result = false;
                 String path = request.getServletPath();
-                if(log.isDebugEnabled()) {
-                    log.debug("path :: {}", path);
-                }
                 
                 //JWT 토큰 검증 및 SecurityContext 생성제한 URL(yml에서 관리)
                 //URL 일치
@@ -159,6 +156,9 @@ public class SecurityConfiguration {
                     String[] equalsUrlArr = equalsUrl.split(",");
                     for(String arr : equalsUrlArr) {
                         if(StringUtils.defaultString(arr).equals(path)) {
+                            if(log.isInfoEnabled()) {
+                                log.info("* Token check pass path :: {}", path);
+                            }
                             return true;
                         }
                     }
@@ -168,6 +168,9 @@ public class SecurityConfiguration {
                     String[] startWithUrlArr = startWithUrl.split(",");
                     for(String arr : startWithUrlArr) {
                         if(path.startsWith(arr)) {
+                            if(log.isInfoEnabled()) {
+                                log.info("* Token check pass path :: {}", path);
+                            }
                             return true;
                         }
                     }

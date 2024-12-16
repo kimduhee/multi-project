@@ -3,6 +3,7 @@ package com.framework.web.common.security.controller;
 import com.framework.web.common.factory.ErrorMessageSourceFactory;
 import com.framework.web.common.handler.CommonApiResponse;
 import com.framework.web.common.util.BeanUtil;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ public class SecurityController {
      * @param request
      * @return
      */
+    @Hidden
     @PostMapping(value="/authentication-fail")
     public ResponseEntity<CommonApiResponse> authenticationFail(HttpServletRequest request) {
 
