@@ -1,0 +1,15 @@
+bootJar.enabled = false
+jar.enabled = true
+
+group 'com.framework'
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    compileOnly project(":module-common")
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //h2 jdbc
+    runtimeOnly 'com.h2database:h2'
+}

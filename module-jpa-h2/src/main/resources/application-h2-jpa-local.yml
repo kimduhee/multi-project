@@ -1,0 +1,35 @@
+spring:
+
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: 'jdbc:h2:mem:testdb'
+      username: sa
+      password:
+  
+  # 임베디드 h2 콘솔을 사용하기 위한 정의
+  h2:
+    console:
+      # console 사용 여부
+      enabled: true
+      # 접속주소(http://localhost:{port}/h2-console)
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # DB 초기화 전략
+      # none: 테이블 생성 전략 미사용
+      # create: 기존 테이블 삭제 후 재생성
+      # create-drop: 기존 테이블 삭제후 재생성, 애플리케이션 종료 시점에 테이블 삭제
+      # update: 기존 테이블 구조 유지, 새로 추가된 컬럼만 테이블에 반영, 기존 컬럼속성이 변경
+      # 되어도 테이블에 미반영
+      # validate: DDL 쿼리를 실행하지 않고 엔티티와 테이블이 정상적으로 매핑되었는지만 확인
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        # 쿼리 로그 포맷(정렬)
+        format_sql: true
+        # 쿼리 로그 출력
+        show_sql: true

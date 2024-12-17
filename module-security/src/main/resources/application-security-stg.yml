@@ -8,8 +8,12 @@ jwt:
   #로그인 후 토큰인증이 필요없는 url
   excluding-check:
     equals-url: /login
-    start-with-url: /v1/api/join/,/swagger-ui/,/v3/api-docs,/error/
+    start-with-url: /join,/swagger-ui,/v3/api-docs,/error/
+  expiration:
+    access-token:
+      # JWT만료시간 설정 (10분 = 1000 * 60 * 10 = 600000)
+      time: 600000
 
 auth:
   excluding-check:
-    pattern: /login,/v1/view/join/**,/v1/api/join/**,/,/error/**,/swagger-ui/**,/favicon.ico,/v3/api-docs/**
+    pattern: /login,/join,/v1/api/join/**,/,/error/**,/swagger-ui/**,/favicon.ico,/v3/api-docs/**

@@ -1,0 +1,9 @@
+server:
+  # 내장 톰캣 포트번호
+  port: 8080
+
+spring:
+  application:
+    name: app
+
+

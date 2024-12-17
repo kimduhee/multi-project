@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.common.mapper.UserInfoMapper">
+
+    <!-- 해당 태그는 무조건 삭제!! -->
+    <!--<cache-ref namespace=""/>-->
+
+    <!-- 이메일로 로그인 위한 사용자 정보 조회-->
+    <select id="getUserInfoByEmail" parameterType="String" resultType="com.framework.common.security.dto.UserInfo">
+        /** com.framework.common.mapper.UserInfoMapper.getUserInfoByEmail **/
+        SELECT
+            USER_ID
+            , USER_EMAIL
+            , USER_PASSWORD
+            , USER_NAME
+            , USER_NICKNAME
+            , USER_ROLE
+        FROM USER_INFO
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <!-- 아이디로 로그인 위한 사용자 정보 조회-->
+    <select id="getUserInfoById" parameterType="String" resultType="com.framework.common.security.dto.UserInfo">
+        /** com.framework.common.mapper.UserInfoMapper.getUserInfoById **/
+        SELECT
+        USER_ID
+        , USER_EMAIL
+        , USER_PASSWORD
+        , USER_NAME
+        , USER_NICKNAME
+        , USER_ROLE
+        FROM USER_INFO
+        WHERE USER_ID = #{userId}
+    </select>
+</mapper>

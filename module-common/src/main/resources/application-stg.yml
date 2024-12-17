@@ -26,12 +26,6 @@ spring:
       max-request-size: 10MB
       location: C:/uploads/images/
 
-logging:
-  level:
-    com.framework.web: debug
-    org.springframework.web: debug
-    root: info
-
 #Swagger 설정
 springdoc:
   packages-to-scan: com.framework

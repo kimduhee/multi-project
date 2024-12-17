@@ -1,6 +1,6 @@
 package com.framework.web.controller.sample;
 
-import com.framework.web.common.handler.CommonApiResponse;
+import com.framework.common.handler.CommonApiResponse;
 import com.framework.web.controller.sample.dto.*;
 import com.framework.web.service.sample.SampleService;
 import com.framework.web.service.sample.dto.*;
@@ -30,8 +30,11 @@ public class SampleController {
     public ResponseEntity<CommonApiResponse> sampleList(@Validated SampleListCInDto cInDto) {
         SampleListCOutDto cOutDto = new SampleListCOutDto();
 
+//        String a = null;
+//        if(a.equals("")) {
+//            throw new BizException("ERRBIZAA000000");
+//        }
         GetSampleListSInDto sInDto = new GetSampleListSInDto();
-        //BeanUtils.copyProperties(cInDto, sInDto);
         List<GetSampleListSOutDto> sampleList =  service.getSampleList(sInDto);
         cOutDto.setSampleList(sampleList);
 

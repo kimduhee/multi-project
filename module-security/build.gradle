@@ -6,6 +6,7 @@ version '0.0.1-SNAPSHOT'
 
 dependencies {
     compileOnly project(":module-common")
+    compileOnly project(":module-jpa-h2")
 
     //JWT 토큰
     implementation 'io.jsonwebtoken:jjwt:0.12.3'
@@ -14,4 +15,5 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.11'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
     compileOnly 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
