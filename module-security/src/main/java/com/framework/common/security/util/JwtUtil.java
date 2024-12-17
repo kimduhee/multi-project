@@ -106,6 +106,32 @@ public class JwtUtil {
     }
 
     /**
+     * JWT 만료일 조회
+     * @param token
+     * @param secretKey
+     * @return
+     */
+    public static long getExpirationTime(String token, String secretKey) {
+        try {
+
+            if(StringUtils.isEmpty(token) || StringUtils.isEmpty(secretKey)) {
+                return 0;
+            }
+
+            long exp = (Long)Jwts.parser()
+                    .verifyWith(getSignInKey(secretKey))
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .get("exp");
+            return exp;
+        } catch(Exception e) {
+            log.error("* exp exception", e);
+            return 0;
+        }
+    }
+
+    /**
      * 요청 토큰값 조회
      *
      * @param request

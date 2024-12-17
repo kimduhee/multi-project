@@ -8,4 +8,6 @@ import lombok.Setter;
 public class LoginJwtTokenDto {
     private String accessToken;
     private String refreshToken;
+    private long accessExpiration;
+    private long refreshExpiration;
 }

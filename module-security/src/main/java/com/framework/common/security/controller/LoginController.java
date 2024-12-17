@@ -13,7 +13,6 @@ import com.framework.common.security.util.JwtUtil;
 import com.framework.common.security.util.SecuritySessionUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,11 +69,13 @@ public class LoginController {
         updateJWT.setUserRefreshToken("logout");
         userInfoService.updateUserToken(updateJWT);
         cOutDto.setResult("success");
+
         return new ResponseEntity<>(CommonApiResponse.ok(cOutDto), HttpStatus.OK);
     }
 
     /**
      * 토큰 재발급
+     * @param cInDto refresh 토큰 값
      * @return
      */
     @Operation(summary="토큰 재발급", description = "토큰 재발급")
@@ -117,7 +118,9 @@ public class LoginController {
         userInfoService.updateUserToken(updateJWT);
 
         jwtTokenDto.setAccessToken(accessToken);
+        jwtTokenDto.setAccessExpiration(JwtUtil.getExpirationTime(accessToken, secretKey));
         jwtTokenDto.setRefreshToken(refreshToken);
+        jwtTokenDto.setRefreshExpiration(JwtUtil.getExpirationTime(refreshToken, secretKey));
 
         return new ResponseEntity<>(CommonApiResponse.ok(jwtTokenDto), HttpStatus.OK);
     }

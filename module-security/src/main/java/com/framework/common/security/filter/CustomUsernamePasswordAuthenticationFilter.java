@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.security.SecurityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -123,11 +124,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         JWTInfo jWTInfo = userInfoService.getUserToken(principalDetails.getUsername());
         if(jWTInfo == null || "".equals(jWTInfo.getUserId())) {
             //사용자 토큰 정보가 없을 경우 저장
-            JWTInfo saveJWT = new JWTInfo();
-            saveJWT.setUserId(Integer.parseInt(principalDetails.getUsername()));
-            saveJWT.setUserAccessToken(accessToken);
-            saveJWT.setUserRefreshToken(refreshToken); //TODO refreshToken을 양방향 암호화 거칠지 고민필요
-            userInfoService.saveUserToken(saveJWT);
+            if(jWTInfo == null) {
+                jWTInfo = new JWTInfo();
+            }
+            jWTInfo.setUserId(Integer.parseInt(principalDetails.getUsername()));
+            jWTInfo.setUserAccessToken(accessToken);
+            jWTInfo.setUserRefreshToken(refreshToken); //TODO refreshToken을 양방향 암호화 거칠지 고민필요
+            userInfoService.saveUserToken(jWTInfo);
         } else {
             //사용자 토큰 정보가 있을 경우 수정
             jWTInfo.setUserId(Integer.parseInt(principalDetails.getUsername()));
@@ -139,7 +142,9 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         //client에 access, refresh Token 전달
         LoginJwtTokenDto tokenDto = new LoginJwtTokenDto();
         tokenDto.setAccessToken(accessToken);
+        tokenDto.setAccessExpiration(JwtUtil.getExpirationTime(accessToken, secretKey));
         tokenDto.setRefreshToken(refreshToken);
+        tokenDto.setRefreshExpiration(JwtUtil.getExpirationTime(refreshToken, secretKey));
         CommonApiResponse res = CommonApiResponse.ok(tokenDto);
 
         response.setContentType("application/json;charset=UTF-8");
@@ -164,9 +169,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Login fail start !");
-            log.debug("*********************************");
         }
 
         //api 호출이 아닐경우 500페이지로 던짐
@@ -205,9 +208,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         response.getWriter().write(objectMapper.registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).writeValueAsString(res));
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Login fail end !");
-            log.debug("*********************************");
         }
     }
 }
