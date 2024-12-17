@@ -112,12 +112,14 @@ public class LoginController {
         //refresh Token 생성
         String refreshToken = JwtUtil.createJWT(String.valueOf(userId), secretKey, refreshTokenexpirationTime);
 
+        //사용자 토큰값 갱신
         JWTInfo updateJWT = new JWTInfo();
         updateJWT.setUserId(Integer.parseInt(userId));
         updateJWT.setUserAccessToken(accessToken);
         updateJWT.setUserRefreshToken(refreshToken);
         userInfoService.updateUserToken(updateJWT);
 
+        //client에 토큰값/유효시간 응답
         jwtTokenDto.setAccessToken(accessToken);
         jwtTokenDto.setAccessExpiration(JwtUtil.getExpirationTime(accessToken, secretKey));
         jwtTokenDto.setRefreshToken(refreshToken);
