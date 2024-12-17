@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,7 +81,7 @@ public class LoginController {
      */
     @Operation(summary="토큰 재발급", description = "토큰 재발급")
     @PostMapping(value="/refresh-token")
-    public ResponseEntity<CommonApiResponse> refreshToken(@RequestBody RefreshTokenCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> refreshToken(@RequestBody @Validated RefreshTokenCInDto cInDto) {
 
         LoginJwtTokenDto jwtTokenDto = new LoginJwtTokenDto();
 
