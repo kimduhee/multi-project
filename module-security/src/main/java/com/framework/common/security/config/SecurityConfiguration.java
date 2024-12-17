@@ -1,5 +1,6 @@
 package com.framework.common.security.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framework.common.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.framework.common.security.filter.JwtAuthenticationFilter;
 import com.framework.common.security.handler.CustomAccessDeniedHandler;
@@ -64,6 +65,7 @@ public class SecurityConfiguration {
 
     private final UserInfoService userInfoService;
     private final UserDetailsService userDetailsService;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public SecurityFilterChain config(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception{
@@ -134,7 +136,7 @@ public class SecurityConfiguration {
      * @throws Exception
      */
     public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
-        CustomUsernamePasswordAuthenticationFilter authorizationFilter = new CustomUsernamePasswordAuthenticationFilter(authenticationManager(), secretKey, expirationTime);
+        CustomUsernamePasswordAuthenticationFilter authorizationFilter = new CustomUsernamePasswordAuthenticationFilter(authenticationManager(), secretKey, expirationTime, objectMapper);
         authorizationFilter.setFilterProcessesUrl("/login");
         return authorizationFilter;
     }
@@ -145,7 +147,7 @@ public class SecurityConfiguration {
      */
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         //return new JwtAuthenticationFilter(userInfoService);
-        return new JwtAuthenticationFilter(secretKey, userInfoService) {
+        return new JwtAuthenticationFilter(secretKey, userInfoService, objectMapper) {
             @Override
             protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
                 boolean result = false;
@@ -188,7 +190,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public CustomAuthenticationEntryPoint authenticationEntryPoint() {
-        return new CustomAuthenticationEntryPoint();
+        return new CustomAuthenticationEntryPoint(objectMapper);
     }
 
     /**
@@ -197,7 +199,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public CustomAccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
+        return new CustomAccessDeniedHandler(objectMapper);
     }
 
     /**

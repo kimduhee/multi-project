@@ -31,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final String secretKey;
     private final UserInfoService userInfoService;
+    private final ObjectMapper objectMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -92,8 +93,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     public void responseValidationJWT(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
         ErrorMessageSourceFactory errorMessageSourceFactory = BeanUtil.getBean(ErrorMessageSourceFactory.class);
 
         String errorCode = "ERRCOMLO000003";

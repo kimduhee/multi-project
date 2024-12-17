@@ -2,6 +2,7 @@ package com.framework.common.aop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framework.common.handler.CommonApiResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,10 +17,13 @@ import org.springframework.util.StopWatch;
 @Aspect
 @Component
 @Profile(value={"local","dev"})
+@RequiredArgsConstructor
 public class LoggingAop {
 
     @Pointcut("execution(* com.framework..*Controller.*(..))")
     private void controllerCut(){};
+
+    private final ObjectMapper objectMapper;
 
     @Around("controllerCut()")
     public Object executionTime(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -44,11 +48,7 @@ public class LoggingAop {
     @Before("controllerCut()")
     public void beforeParameterLog(JoinPoint joinPoint) {
         try {
-            //Method method = getMethod(joinPoint);
-            ObjectMapper objectMapper = new ObjectMapper();
-
             if(log.isInfoEnabled()) {
-                log.info("******************************************************");
                 log.info("* Controller Start!");
                 log.info("* - Method name : {}", getMethod(joinPoint));
             }
@@ -70,10 +70,6 @@ public class LoggingAop {
             }
         } catch(Exception e) {
             log.info("*");
-        } finally {
-            if(log.isInfoEnabled()) {
-                log.info("******************************************************");
-            }
         }
     }
 
@@ -83,17 +79,14 @@ public class LoggingAop {
         try {
             if (log.isInfoEnabled()) {
                 //Method method = getMethod(joinPoint);
-                log.info("******************************************************");
                 log.info("* Controller End!");
                 log.info("* - Method name : {}", getMethod(joinPoint));
                 if(returnObj instanceof String) {
                     log.info("* - Return value : {}.html", returnObj);
                 } else if(returnObj instanceof ResponseEntity) {
-                    ObjectMapper objectMapper = new ObjectMapper();
                     Object obj = ((CommonApiResponse) ((ResponseEntity) returnObj).getBody()).getData();
                     log.info("* - Return value : {}", objectMapper.writeValueAsString(obj));
                 }
-                log.info("******************************************************");
             }
         } catch(Exception e) {
             log.error(e.getMessage());

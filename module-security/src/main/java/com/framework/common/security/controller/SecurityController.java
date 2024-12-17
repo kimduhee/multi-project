@@ -43,4 +43,10 @@ public class SecurityController {
 
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+//    @PostMapping(value="/refresh-token")
+//    public ResponseEntity<CommonApiResponse> refreshToken(HttpServletRequest request) {
+//
+//        return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }

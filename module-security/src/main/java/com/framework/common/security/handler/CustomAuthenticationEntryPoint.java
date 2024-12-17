@@ -25,6 +25,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    private final ObjectMapper objectMapper;
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
@@ -39,8 +41,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             response.sendRedirect("/error/401");
             return;
         }
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         String errorCode = (String)request.getAttribute("AUTHENTICATION_FAIL");
         String errorMessage = "";

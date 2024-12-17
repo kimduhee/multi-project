@@ -38,6 +38,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     private final AuthenticationManager authenticationManager;
     private final String secretKey;
     private final String expirationTime;
+    private final ObjectMapper objectMapper;
 
     /**
      * login 요청을 하면 로그인 시도를 위해서 실행되는 함수
@@ -102,8 +103,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             log.debug("* Login success start !");
             log.debug("*********************************");
         }
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         CustomUserDetails principalDetails = (CustomUserDetails)authResult.getPrincipal();
         //JWT Token 생성
@@ -173,14 +172,12 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             errorCode = "ERRCOMLO000002";
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
         ErrorMessageSourceFactory errorMessageSourceFactory = BeanUtil.getBean(ErrorMessageSourceFactory.class);
         String errorMessage = errorMessageSourceFactory.getMessage(errorCode);
         CommonApiResponse res = CommonApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, errorCode, errorMessage);
 
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        //response.getWriter().write(new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR));
         response.getWriter().write(objectMapper.registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).writeValueAsString(res));
 
         if(log.isDebugEnabled()) {

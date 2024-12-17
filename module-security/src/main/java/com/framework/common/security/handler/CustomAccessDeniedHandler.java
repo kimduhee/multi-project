@@ -25,6 +25,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
+    private final ObjectMapper objectMapper;
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         if(log.isInfoEnabled()) {
@@ -38,8 +40,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             response.sendRedirect("/error/403");
             return;
         }
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         String errorCode = (String)request.getAttribute("AUTHENTICATION_FAIL");
         String errorMessage = "";
