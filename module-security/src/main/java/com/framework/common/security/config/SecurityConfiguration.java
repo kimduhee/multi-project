@@ -45,9 +45,11 @@ import java.util.List;
 @PropertySource("classpath:/application-security-${spring.profiles.active}.yml")
 public class SecurityConfiguration {
 
+    //JWT 토큰 키
     @Value("${jwt.secret-key}")
     private String secretKey;
 
+    //JWT 만료시간
     @Value("${jwt.expiration.access-token.time}")
     private String expirationTime;
 
@@ -71,7 +73,6 @@ public class SecurityConfiguration {
         String[] authPatternArr = authPattern.split(",");
 
         if(log.isInfoEnabled()) {
-            log.info("************************************");
             log.info("* Allow path List");
         }
         //인가처리에서 제외 될 패턴
@@ -83,9 +84,6 @@ public class SecurityConfiguration {
             }
             permitAllWhiteList[index] = mvc.pattern(arr);
             index++;
-        }
-        if(log.isInfoEnabled()) {
-            log.info("************************************");
         }
 
         http

@@ -50,7 +50,6 @@ public class JwtUtil {
                 return null;
             }
 
-            //Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
             Jwts.parser().verifyWith(getSignInKey(secretKey)).build().parseSignedClaims(token);
             return "00";
         } catch(io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
@@ -94,12 +93,6 @@ public class JwtUtil {
                 return null;
             }
 
-//            String userId = (String)Jwts.parser()
-//                    .setSigningKey(secretKey)
-//                    .build()
-//                    .parseClaimsJws(token)
-//                    .getBody()
-//                    .get("userId");
             String userId = (String)Jwts.parser()
                     .verifyWith(getSignInKey(secretKey))
                     .build()

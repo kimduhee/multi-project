@@ -58,10 +58,10 @@ public class CommonApiResponse<T> {
      * @param code
      * @param message
      * @return
-     * @param <T>
+     * @param
      */
-    public static <T> CommonApiResponse<T> fail(HttpStatus status, String code, String message) {
-        return CommonApiResponse.<T>builder()
+    public static CommonApiResponse fail(HttpStatus status, String code, String message) {
+        return CommonApiResponse.builder()
                 .status(status.value())
                 .code(code)
                 .message(message)
