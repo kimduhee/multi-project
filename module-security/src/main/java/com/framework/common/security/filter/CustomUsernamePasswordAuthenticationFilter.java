@@ -55,9 +55,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Login process start !");
-            log.debug("*********************************");
         }
 
         try {
@@ -76,16 +74,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
         } catch (AuthenticationException e) {
             log.error("- CustomUsernamePasswordAuthenticationFilter AuthenticationException : {}", e.getMessage());
-            //throw new RuntimeException(e);
             throw e;
         } catch (Exception e) {
             log.error("- CustomUsernamePasswordAuthenticationFilter RuntimeException : {}", e);
             throw new BadCredentialsException("");
         } finally {
             if(log.isDebugEnabled()) {
-                log.debug("*********************************");
                 log.debug("* Login process end !");
-                log.debug("*********************************");
             }
         }
     }
@@ -103,9 +98,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Login success start !");
-            log.debug("*********************************");
         }
 
         CustomUserDetails principalDetails = (CustomUserDetails)authResult.getPrincipal();
@@ -152,9 +145,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         response.getWriter().write(objectMapper.registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).writeValueAsString(res));
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Login success end !");
-            log.debug("*********************************");
         }
     }
 
