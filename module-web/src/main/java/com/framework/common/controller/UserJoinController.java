@@ -1,10 +1,10 @@
-package com.framework.common.security.controller;
+package com.framework.common.controller;
 
+import com.framework.common.controller.dto.UserJoinCInDto;
+import com.framework.common.controller.dto.UserJoinCOutDto;
 import com.framework.common.handler.CommonApiResponse;
-import com.framework.common.security.controller.dto.JoinCInDto;
-import com.framework.common.security.controller.dto.JoinCOutDto;
-import com.framework.common.security.service.JoinService;
-import com.framework.common.security.service.dto.JoinSInDto;
+import com.framework.common.service.UserJoinService;
+import com.framework.common.service.dto.UserJoinSInDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-public class JoinController {
+public class UserJoinController {
 
-    private final JoinService userJoinService;
+    private final UserJoinService userJoinService;
 
     @Operation(summary="회원가입", description = "회원가입 처리한다.")
     @PostMapping("/join")
-    public ResponseEntity<CommonApiResponse> join(@RequestBody @Validated JoinCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> join(@RequestBody @Validated UserJoinCInDto cInDto) {
 
-        JoinCOutDto cOutDto = new JoinCOutDto();
-        JoinSInDto sInDto = new JoinSInDto();
+        UserJoinCOutDto cOutDto = new UserJoinCOutDto();
+        UserJoinSInDto sInDto = new UserJoinSInDto();
         BeanUtils.copyProperties(cInDto, sInDto);
 
         int result  = userJoinService.join(sInDto);

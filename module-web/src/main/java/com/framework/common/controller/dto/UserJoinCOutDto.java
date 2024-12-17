@@ -1,10 +1,10 @@
-package com.framework.common.security.controller.dto;
+package com.framework.common.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class JoinCOutDto {
+public class UserJoinCOutDto {
     private String result;
 }
