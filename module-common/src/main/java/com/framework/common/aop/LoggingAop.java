@@ -37,9 +37,9 @@ public class LoggingAop {
             stopWatch.stop();
             if (log.isInfoEnabled()) {
                 log.info("******************************************************");
-                log.info("* execution time");
+                log.info("* Service infomation");
                 log.info("* - method : {}", joinPoint.getSignature().toShortString());
-                log.info("* - Total execution time : {}", stopWatch.getTotalTimeSeconds());
+                log.info("* - Total run time : {}", stopWatch.getTotalTimeSeconds());
                 log.info("******************************************************");
             }
         }
