@@ -56,7 +56,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        //response.getWriter().write(new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR));
         response.getWriter().write(objectMapper.registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).writeValueAsString(res));
     }
 }

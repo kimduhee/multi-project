@@ -32,9 +32,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Provider start !");
-            log.debug("*********************************");
         }
 
         String username = authentication.getName();
@@ -47,18 +45,24 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         CustomUserDetails principalDetails = (CustomUserDetails)userDetailsService.loadUserByUsername(username);
 
+        //사용자 정보 없을 경우
         if(principalDetails == null || principalDetails.getUserInfo() == null) {
+            if(log.isDebugEnabled()) {
+                log.debug("- Not user information");
+            }
             throw new BadCredentialsException(username);
         }
 
+        //비밀번호 불일치 시
         if(!bCryptPasswordEncoder.matches(password, principalDetails.getUserInfo().getUserPassword())) {
+            if(log.isDebugEnabled()) {
+                log.debug("- Password mismatch");
+            }
             throw new InternalAuthenticationServiceException(username);
         }
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* Provider end !");
-            log.debug("*********************************");
         }
 
         return new UsernamePasswordAuthenticationToken(

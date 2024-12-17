@@ -28,7 +28,7 @@ public class CommonApiResponse<T> {
     private String message;
 
     //응답 데이터
-    private Object data;
+    private T data;
 
     //응답 시간
     private final LocalDateTime time;
@@ -60,8 +60,8 @@ public class CommonApiResponse<T> {
      * @return
      * @param
      */
-    public static CommonApiResponse fail(HttpStatus status, String code, String message) {
-        return CommonApiResponse.builder()
+    public static <T> CommonApiResponse<T> fail(HttpStatus status, String code, String message) {
+        return CommonApiResponse.<T>builder()
                 .status(status.value())
                 .code(code)
                 .message(message)

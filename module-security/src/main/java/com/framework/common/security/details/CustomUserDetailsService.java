@@ -31,8 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
-        //UserInfoService userInfoService = (UserInfoService)BeanUtil.getBean(UserInfoService.class);
-
+        //사용자 정보 조회
         UserInfo user = userInfoService.getUserInfoByEmail(username);
         CustomUserDetails customUserDetails = new CustomUserDetails();
         customUserDetails.setUserInfo(user);

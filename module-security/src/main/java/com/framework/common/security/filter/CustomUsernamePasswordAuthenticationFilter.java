@@ -151,7 +151,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
         String errorCode = "";
 
-        //TODO 에러에 따른 구현 필요
         if(failed instanceof BadCredentialsException) {
             //사용자 정보 없음
             if(log.isDebugEnabled()) {
