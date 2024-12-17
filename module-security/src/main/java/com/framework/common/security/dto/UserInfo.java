@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class UserInfo {
-    private long userId;
+    private int userId;
     private String userEmail;
     private String userName;
     private String userNickname;

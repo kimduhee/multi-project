@@ -6,7 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.framework.common.security.details.CustomUserDetails;
 import com.framework.common.security.dto.LoginJwtTokenDto;
+import com.framework.common.security.dto.JWTInfo;
 import com.framework.common.security.dto.UserInfo;
+import com.framework.common.security.service.UserInfoService;
 import com.framework.common.security.util.JwtUtil;
 import com.framework.common.factory.ErrorMessageSourceFactory;
 import com.framework.common.handler.CommonApiResponse;
@@ -19,7 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,8 +38,10 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
     private final AuthenticationManager authenticationManager;
     private final String secretKey;
-    private final String expirationTime;
+    private final String accessTokenexpirationTime;
+    private final String refreshTokenexpirationTime;
     private final ObjectMapper objectMapper;
+    private final UserInfoService userInfoService;
 
     /**
      * login 요청을 하면 로그인 시도를 위해서 실행되는 함수
@@ -105,16 +108,38 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         }
 
         CustomUserDetails principalDetails = (CustomUserDetails)authResult.getPrincipal();
-        //JWT Token 생성
-        String jwtToken = JwtUtil.createJWT(String.valueOf(principalDetails.getUserInfo().getUserId()), secretKey, expirationTime);
+        //access Token 생성
+        String accessToken = JwtUtil.createJWT(String.valueOf(principalDetails.getUserInfo().getUserId()), secretKey, accessTokenexpirationTime);
+        //refresh Token 생성
+        String refreshToken = JwtUtil.createJWT(String.valueOf(principalDetails.getUserInfo().getUserId()), secretKey, refreshTokenexpirationTime);
 
         if(log.isDebugEnabled()) {
             log.debug("- USER ID : {}", principalDetails.getUsername());
-            log.debug("- JWT token : {}", jwtToken);
+            log.debug("- accessToken : {}", accessToken);
+            log.debug("- refreshToken : {}", refreshToken);
         }
 
+        // 발급된 사용자 토큰 정보 저장
+        JWTInfo jWTInfo = userInfoService.getUserToken(principalDetails.getUsername());
+        if(jWTInfo == null || "".equals(jWTInfo.getUserId())) {
+            //사용자 토큰 정보가 없을 경우 저장
+            JWTInfo saveJWT = new JWTInfo();
+            saveJWT.setUserId(Integer.parseInt(principalDetails.getUsername()));
+            saveJWT.setUserAccessToken(accessToken);
+            saveJWT.setUserRefreshToken(refreshToken); //TODO refreshToken을 양방향 암호화 거칠지 고민필요
+            userInfoService.saveUserToken(saveJWT);
+        } else {
+            //사용자 토큰 정보가 있을 경우 수정
+            jWTInfo.setUserId(Integer.parseInt(principalDetails.getUsername()));
+            jWTInfo.setUserAccessToken(accessToken);
+            jWTInfo.setUserRefreshToken(refreshToken); //TODO refreshToken을 양방향 암호화 거칠지 고민필요
+            userInfoService.updateUserToken(jWTInfo);
+        }
+
+        //client에 access, refresh Token 전달
         LoginJwtTokenDto tokenDto = new LoginJwtTokenDto();
-        tokenDto.setAccessToken(jwtToken);
+        tokenDto.setAccessToken(accessToken);
+        tokenDto.setRefreshToken(refreshToken);
         CommonApiResponse res = CommonApiResponse.ok(tokenDto);
 
         response.setContentType("application/json;charset=UTF-8");

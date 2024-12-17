@@ -1,8 +1,8 @@
 package com.framework.common.service.impl;
 
 import com.framework.common.mapper.JoinMapper;
-import com.framework.common.service.JoinService;
-import com.framework.common.service.dto.JoinSInDto;
+import com.framework.common.security.service.JoinService;
+import com.framework.common.security.service.dto.JoinSInDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

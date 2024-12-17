@@ -1,11 +1,10 @@
-package com.framework.common.controller;
+package com.framework.common.security.controller;
 
-import com.framework.common.controller.dto.JoinCInDto;
-import com.framework.common.controller.dto.JoinCOutDto;
-import com.framework.common.dto.UserJoin;
 import com.framework.common.handler.CommonApiResponse;
-import com.framework.common.service.JoinService;
-import com.framework.common.service.dto.JoinSInDto;
+import com.framework.common.security.controller.dto.JoinCInDto;
+import com.framework.common.security.controller.dto.JoinCOutDto;
+import com.framework.common.security.service.JoinService;
+import com.framework.common.security.service.dto.JoinSInDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

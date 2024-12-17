@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.framework.common.factory.ErrorMessageSourceFactory;
 import com.framework.common.handler.CommonApiResponse;
 import com.framework.common.security.details.CustomUserDetails;
+import com.framework.common.security.dto.JWTInfo;
 import com.framework.common.security.dto.UserInfo;
 import com.framework.common.security.service.UserInfoService;
 import com.framework.common.security.util.JwtUtil;
@@ -37,22 +38,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* JWT token validation start !");
-            log.debug("*********************************");
         }
 
-        String token = request.getHeader("Authorization");
+//        String token = request.getHeader("Authorization");
+        String token = JwtUtil.getToken(request);
 
-        if(token != null && token.startsWith("Bearer ")) {
+
+//        if(token != null && token.startsWith("Bearer ")) {
+        if(!"".equals(token)) {
 
             if(log.isDebugEnabled()) {
                 log.debug("- JWT token validation execute ");
             }
 
-            token = token.substring(7);
+//            token = token.substring(7);
             String validationResult = JwtUtil.validateToken(token, secretKey);
 
+            //유효하지 않는 토큰
             if(!"00".equals(validationResult)) {
                 responseValidationJWT(request, response);
                 return;
@@ -66,6 +69,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             //JWT 토큰에 의해 userId 추출 가능시에만 SecurityContext 생성
             if(!StringUtils.isEmpty(userId)) {
+                //사용자 토큰 정보조회
+                JWTInfo jWTInfo = userInfoService.getUserToken(userId);
+
+                //access token이 'logout'이면 로그아웃 상태
+                if(jWTInfo != null && "logout".equals(jWTInfo.getUserAccessToken())) {
+                    responseValidationJWT(request, response);
+                    return;
+                }
+
+                //요청된 access token과 db user access token 비교
+                if(!token.equals(jWTInfo.getUserAccessToken())) {
+                    if(log.isDebugEnabled()) {
+                        log.debug("- request/db token mismatch");
+                        log.debug("- request token :: {}", token);
+                        log.debug("- db token :: {}", jWTInfo.getUserAccessToken());
+                    }
+                    responseValidationJWT(request, response);
+                    return;
+                }
+
                 UserInfo userInfo = (UserInfo)userInfoService.getUserInfoById(userId);
                 CustomUserDetails principalDetails = new CustomUserDetails(userInfo);
                 if(userId != null) {
@@ -84,9 +107,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if(log.isDebugEnabled()) {
-            log.debug("*********************************");
             log.debug("* JWT token validation end !");
-            log.debug("*********************************");
         }
 
         filterChain.doFilter(request, response);

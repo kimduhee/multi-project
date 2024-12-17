@@ -1,6 +1,7 @@
 package com.framework.common.security.provider;
 
 import com.framework.common.security.details.CustomUserDetails;
+import com.framework.common.security.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;

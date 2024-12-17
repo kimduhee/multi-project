@@ -12,7 +12,7 @@ login:
 logging:
   level:
     com.framework: debug
-    org.springframework.web: debug
+    org.springframework.web: info
     root: info
 
 

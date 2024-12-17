@@ -51,7 +51,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         }
 
         errorMessage = errorMessageSourceFactory.getMessage(errorCode);
-        CommonApiResponse res = CommonApiResponse.fail(HttpStatus.UNAUTHORIZED, errorCode, errorMessage);
+        CommonApiResponse res = CommonApiResponse.fail(HttpStatus.FORBIDDEN, errorCode, errorMessage);
 
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");

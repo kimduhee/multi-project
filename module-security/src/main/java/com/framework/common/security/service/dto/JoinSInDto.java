@@ -1,4 +1,4 @@
-package com.framework.common.service.dto;
+package com.framework.common.security.service.dto;
 
 import lombok.Getter;
 import lombok.Setter;

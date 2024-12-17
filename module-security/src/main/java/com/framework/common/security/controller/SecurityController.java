@@ -5,6 +5,7 @@ import com.framework.common.handler.CommonApiResponse;
 import com.framework.common.util.BeanUtil;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class SecurityController {
 
     /**
@@ -44,9 +46,4 @@ public class SecurityController {
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @PostMapping(value="/refresh-token")
-//    public ResponseEntity<CommonApiResponse> refreshToken(HttpServletRequest request) {
-//
-//        return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
 }

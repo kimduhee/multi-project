@@ -50,9 +50,13 @@ public class SecurityConfiguration {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    //JWT 만료시간
+    //access-token 만료시간
     @Value("${jwt.expiration.access-token.time}")
-    private String expirationTime;
+    private String accessTokenexpirationTime;
+
+    //refresh-token 만료시간
+    @Value("${jwt.expiration.refresh-token.time}")
+    private String refreshTokenexpirationTime;
 
     @Value("${jwt.excluding-check.equals-url}")
     private String equalsUrl;
@@ -136,7 +140,7 @@ public class SecurityConfiguration {
      * @throws Exception
      */
     public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
-        CustomUsernamePasswordAuthenticationFilter authorizationFilter = new CustomUsernamePasswordAuthenticationFilter(authenticationManager(), secretKey, expirationTime, objectMapper);
+        CustomUsernamePasswordAuthenticationFilter authorizationFilter = new CustomUsernamePasswordAuthenticationFilter(authenticationManager(), secretKey, accessTokenexpirationTime, refreshTokenexpirationTime, objectMapper, userInfoService);
         authorizationFilter.setFilterProcessesUrl("/login");
         return authorizationFilter;
     }
