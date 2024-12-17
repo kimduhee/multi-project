@@ -13,7 +13,7 @@ public class UserInfoJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="USER_ID", length = 10, nullable = false)
-    private Long userId;
+    private int userId;
 
     @Column(name="USER_EMAIL", length = 50, nullable = false)
     private String userEmail;
@@ -31,13 +31,13 @@ public class UserInfoJpa {
     private String userRole;
 
     @Column(name = "REG_ID", length = 10, nullable = false)
-    private Long regId;
+    private int regId;
 
     @Column(name="REG_DT", nullable = false)
     private Date regDt;
 
     @Column(name="UPD_ID", length = 10, nullable = false)
-    private Long updId;
+    private int updId;
 
     @Column(name = "UPD_DT", nullable = false)
     private Date updDt;

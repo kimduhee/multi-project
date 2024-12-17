@@ -42,4 +42,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public void saveUserToken(JWTInfo saveJWT) {
         //TODO 구현 해야됨
     }
+
+    @Override
+    public void updateUserToken(JWTInfo saveJWT) {
+        //TODO 구현 해야됨
+    }
 }
