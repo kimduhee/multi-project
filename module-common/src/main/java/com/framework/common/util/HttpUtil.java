@@ -15,12 +15,12 @@ public class HttpUtil {
 
         boolean isViewResponse = false;
 
-        //Request Content-type 에 application/json 이 포함될 경우 ajax 통신
+        //Request Content-type 에 application/json 이 포함될 경우 ajax(API) 통신
         if(httpServletRequest.getContentType() != null && httpServletRequest.getContentType().indexOf(MediaType.APPLICATION_JSON_VALUE) > -1) {
             return true;
         }
 
-        //Request Headers 의 Accept에 application/json 이 포함될 경우 ajax 통신
+        //Request Headers 의 Accept에 application/json 이 포함될 경우 ajax(API) 통신
         if(httpServletRequest.getHeader("accept") != null && httpServletRequest.getHeader("accept").indexOf(MediaType.APPLICATION_JSON_VALUE) > -1) {
             return true;
         }

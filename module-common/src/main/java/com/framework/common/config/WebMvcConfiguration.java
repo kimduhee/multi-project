@@ -1,8 +1,12 @@
 package com.framework.common.config;
 
+import com.framework.common.filter.XssFilter;
+import com.framework.common.filter.XssHttpServletRequestWrapper;
 import com.framework.common.interceptor.GlobalInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,9 +34,25 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver());
     }
 
+    /**
+     * interceptor registration
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new GlobalInterceptor())
                 .excludePathPatterns("/images/**", "/css/**", "/js/**");
+    }
+
+    /**
+     * XSS filter registration
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean<XssFilter> cstomXssFilter() {
+        FilterRegistrationBean<XssFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new XssFilter());
+        //registrationBean.addUrlPatterns("");
+        return registrationBean;
     }
 }

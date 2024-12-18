@@ -1,6 +1,7 @@
 package com.framework.common.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.framework.common.filter.XssFilter;
 import com.framework.common.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.framework.common.security.filter.JwtAuthenticationFilter;
 import com.framework.common.security.handler.CustomAccessDeniedHandler;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
