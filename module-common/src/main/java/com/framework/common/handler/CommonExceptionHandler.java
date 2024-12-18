@@ -45,8 +45,9 @@ public class CommonExceptionHandler {
 
         CommonApiResponse res = CommonApiResponse.fail(HttpStatus.NOT_FOUND,"ERRCOMCM000404", errorMessageSourceFactory.getMessage("ERRCOMCM000404"));
 
-        if(log.isInfoEnabled()) {
-            log.info("NoHandlerFoundException : [ERRCOMCM000404]{}", errorMessageSourceFactory.getMessage("ERRCOMCM000404"));
+        if(log.isDebugEnabled()) {
+            log.debug("NoHandlerFoundException : [ERRCOMCM000404]{}", errorMessageSourceFactory.getMessage("ERRCOMCM000404"));
+            log.debug("error =>", e);
         }
 
         return new ResponseEntity<>(res, HttpStatus.NOT_FOUND);
@@ -71,8 +72,9 @@ public class CommonExceptionHandler {
 
         CommonApiResponse res = CommonApiResponse.fail(HttpStatus.BAD_REQUEST, "ERRCOMCM000400", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
 
-        if(log.isInfoEnabled()) {
-            log.info("BizException : [ERRCOMCM000400]{}", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        if(log.isDebugEnabled()) {
+            log.debug("BizException : [ERRCOMCM000400]{}", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+            log.debug("error =>", e);
         }
 
         return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
@@ -101,8 +103,9 @@ public class CommonExceptionHandler {
 
         CommonApiResponse res = CommonApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getErrCode(), e.getMessage());
 
-        if(log.isInfoEnabled()) {
-            log.info("BizException : [{}]{}",e.getErrCode(), e.getMessage());
+        if(log.isDebugEnabled()) {
+            log.debug("BizException : [{}]{}",e.getErrCode(), e.getMessage());
+            log.debug("error =>", e);
         }
 
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -127,8 +130,9 @@ public class CommonExceptionHandler {
 
         CommonApiResponse res = CommonApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR,"ERRCOMCM000000", errorMessageSourceFactory.getMessage("ERRCOMCM000000"));
 
-        if(log.isInfoEnabled()) {
-            log.info("RuntimeException : [ERRCOMCM000000]{}", errorMessageSourceFactory.getMessage("ERRCOMCM000000"));
+        if(log.isDebugEnabled()) {
+            log.debug("RuntimeException : [ERRCOMCM000000]{}", errorMessageSourceFactory.getMessage("ERRCOMCM000000"));
+            log.debug("error =>", e);
         }
 
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);

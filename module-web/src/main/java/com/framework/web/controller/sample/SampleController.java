@@ -1,5 +1,6 @@
 package com.framework.web.controller.sample;
 
+import com.framework.common.exception.BizException;
 import com.framework.common.handler.CommonApiResponse;
 import com.framework.web.controller.sample.dto.*;
 import com.framework.web.service.sample.SampleService;
@@ -27,13 +28,9 @@ public class SampleController {
 
     @GetMapping(value="/sample-list")
     @Operation(summary="샘플 리스트 조회", description = "샘플리스트를 조회한다.")
-    public ResponseEntity<CommonApiResponse> sampleList(@RequestBody @Validated SampleListCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> sampleList(@Validated SampleListCInDto cInDto) {
         SampleListCOutDto cOutDto = new SampleListCOutDto();
 
-//        String a = null;
-//        if(a.equals("")) {
-//            throw new BizException("ERRBIZAA000000");
-//        }
         GetSampleListSInDto sInDto = new GetSampleListSInDto();
         List<GetSampleListSOutDto> sampleList =  service.getSampleList(sInDto);
         cOutDto.setSampleList(sampleList);
