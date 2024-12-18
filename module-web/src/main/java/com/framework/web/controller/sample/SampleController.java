@@ -1,6 +1,5 @@
 package com.framework.web.controller.sample;
 
-import com.framework.common.exception.BizException;
 import com.framework.common.handler.CommonApiResponse;
 import com.framework.web.controller.sample.dto.*;
 import com.framework.web.service.sample.SampleService;

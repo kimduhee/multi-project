@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 @Configuration
-@ComponentScan("com.framework")
 @RequiredArgsConstructor
 public class MessageSourceConfiguration {
 

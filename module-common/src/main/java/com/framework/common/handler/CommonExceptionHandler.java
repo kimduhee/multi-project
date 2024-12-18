@@ -36,7 +36,6 @@ public class CommonExceptionHandler {
     public Object handleNotFoundException(NoHandlerFoundException e, HttpServletRequest httpServletRequest) {
 
         if(!HttpUtil.isAjax(httpServletRequest)) {
-            //httpServletRequest.setAttribute("test","test", WebRequest.SCOPE_REQUEST);
             ModelAndView mav = new ModelAndView("forward:/error/404");
             return mav;
         }
@@ -63,7 +62,6 @@ public class CommonExceptionHandler {
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest httpServletRequest) {
 
         if(!HttpUtil.isAjax(httpServletRequest)) {
-            //httpServletRequest.setAttribute("test","test", WebRequest.SCOPE_REQUEST);
             ModelAndView mav = new ModelAndView("forward:/error/400");
             return mav;
         }
@@ -90,7 +88,6 @@ public class CommonExceptionHandler {
     public Object handleBizException(BizException e, HttpServletRequest httpServletRequest) {
 
         if(!HttpUtil.isAjax(httpServletRequest)) {
-            //httpServletRequest.setAttribute("test","test", WebRequest.SCOPE_REQUEST);
             ModelAndView mav = new ModelAndView("forward:/error/500");
             return mav;
         }
@@ -121,7 +118,6 @@ public class CommonExceptionHandler {
     public Object handleRuntimeExceptiontion(RuntimeException e, HttpServletRequest httpServletRequest) {
 
         if(!HttpUtil.isAjax(httpServletRequest)) {
-            //httpServletRequest.setAttribute("test","test", WebRequest.SCOPE_REQUEST);
             ModelAndView mav = new ModelAndView("forward:/error/500");
             return mav;
         }
