@@ -34,19 +34,19 @@ public class RedisController {
             log.debug("***********************************************");
             log.debug("- Insert test => key : test | value : 1234");
             RedisUtil.setRedisStringData("test","1234");
-            log.debug("- Redis result :: {}", RedisUtil.getRedisStringData("test"));
+            log.debug("- Redis result :: {}", (String)RedisUtil.getRedisStringData("test"));
             log.debug("- 초기값");
 
             log.debug("-----------------------------------------------");
             log.debug("- Update test => key : test | value : 5678");
             RedisUtil.setRedisStringData("test","5678");
-            log.debug("- Redis result :: {}", RedisUtil.getRedisStringData("test"));
+            log.debug("- Redis result :: {}", (String)RedisUtil.getRedisStringData("test"));
             log.debug("- 값 변경됨");
 
             log.debug("-----------------------------------------------");
             log.debug("- 전체 Delete test => key : test");
             RedisUtil.deleteAllRedisStirngData("test");
-            log.debug("- Redis result :: {}", RedisUtil.getRedisStringData("test"));
+            log.debug("- Redis result :: {}", (String)RedisUtil.getRedisStringData("test"));
             log.debug("- 값 전체 삭제됨");
 
             log.debug("***********************************************");
