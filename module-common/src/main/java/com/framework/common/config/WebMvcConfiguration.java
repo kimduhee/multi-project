@@ -7,19 +7,39 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+//import org.springframework.scheduling.annotation.EnableAsync;
+//import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
+import java.util.concurrent.Executor;
+
+/**
+ * packageName    : com.framework.common.config
+ * fileName       : WebMvcConfiguration
+ * author         : NAMANOK
+ * date           : 2024-12-19
+ * description    : 웹 MVC 사용자 설정 class
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2024-12-19        NAMANOK       최초 생성
+ */
 @Slf4j
 @Configuration
+//@EnableAsync //TODO 비동기 필요시 주석해제
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     //업로드 이미지 저장경로
     @Value("${spring.servlet.multipart.location}")
     private String uploadImagePath;
 
+    /**
+     * resource handler config
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**")
@@ -54,4 +74,19 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         //registrationBean.addUrlPatterns("");
         return registrationBean;
     }
+/*
+    TODO 비동기 필요시 아래 주석 해제
+*/
+/* 
+    @Bean
+    public Executor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setThreadNamePrefix("async-servlet-");
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(20);
+        executor.setQueueCapacity(500);
+        executor.initialize();
+        return executor;
+    }
+*/    
 }

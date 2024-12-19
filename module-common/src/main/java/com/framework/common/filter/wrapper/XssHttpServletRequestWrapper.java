@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.Map;
@@ -19,9 +20,12 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
         super(request);
 
+        String contentType = StringUtils.defaultString(request.getContentType());
+        String accept = StringUtils.defaultString( request.getHeader("accept"));
+
         try {
             if(request.getMethod().equalsIgnoreCase("post")
-                    && (request.getContentType().startsWith("application/json") || request.getContentType().startsWith("multipart/form-data"))) {
+                    && (contentType.startsWith("application/json") || contentType.startsWith("multipart/form-data") || accept.startsWith("application/json"))) {
                 InputStream is = request.getInputStream();
                 this.rawData = replaceXSS(IOUtils.toByteArray(is));
             }

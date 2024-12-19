@@ -1,0 +1,12 @@
+bootJar.enabled = false
+jar.enabled = true
+
+group 'com.framework'
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    compileOnly project(":module-common")
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}

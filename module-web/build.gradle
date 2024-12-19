@@ -6,6 +6,7 @@ version '0.0.1-SNAPSHOT'
 
 dependencies {
     implementation  project(':module-common')
+    implementation  project(':module-redis')
     implementation  project(':module-security')
     implementation  project(':module-mybatis-h2')
 

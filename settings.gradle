@@ -5,4 +5,5 @@ include 'module-common'
 include 'module-security'
 include 'module-mybatis-h2'
 include 'module-jpa-h2'
+include 'module-redis'
 
