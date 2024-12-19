@@ -1,7 +1,6 @@
 package com.framework.common.config;
 
 import com.framework.common.filter.XssFilter;
-import com.framework.common.filter.XssHttpServletRequestWrapper;
 import com.framework.common.interceptor.GlobalInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

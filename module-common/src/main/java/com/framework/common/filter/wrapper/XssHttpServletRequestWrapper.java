@@ -1,4 +1,4 @@
-package com.framework.common.filter;
+package com.framework.common.filter.wrapper;
 
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
@@ -16,7 +16,9 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     private byte[] rawData;
 
     public XssHttpServletRequestWrapper(HttpServletRequest request) {
+
         super(request);
+
         try {
             if(request.getMethod().equalsIgnoreCase("post")
                     && (request.getContentType().startsWith("application/json") || request.getContentType().startsWith("multipart/form-data"))) {
@@ -38,14 +40,14 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return strData.getBytes();
     }
 
-    private String replaceXSS(String value) {
-        if(value != null) {
-            value = value.replaceAll("<", "&lt;")
+    private String replaceXSS(String data) {
+        if(data != null) {
+            data = data.replaceAll("<", "&lt;")
                     .replaceAll(">", "&gt;")
                     .replaceAll("\\(", "&#40;")
                     .replaceAll("\\)", "&#41;");
         }
-        return value;
+        return data;
     }
 
     @Override

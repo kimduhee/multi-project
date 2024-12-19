@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,18 +40,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.debug("* JWT token validation start !");
         }
 
-//        String token = request.getHeader("Authorization");
         String token = JwtUtil.getToken(request);
 
-
-//        if(token != null && token.startsWith("Bearer ")) {
         if(!"".equals(token)) {
 
             if(log.isDebugEnabled()) {
                 log.debug("- JWT token validation execute ");
             }
 
-//            token = token.substring(7);
             String validationResult = JwtUtil.validateToken(token, secretKey);
 
             //유효하지 않는 토큰

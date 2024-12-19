@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+
 @Slf4j
 @Aspect
 @Component
@@ -37,7 +38,7 @@ public class LoggingAop {
             stopWatch.stop();
             if (log.isInfoEnabled()) {
                 log.info("******************************************************");
-                log.info("* Service infomation");
+                log.info("* Service execution information");
                 log.info("* - method : {}", joinPoint.getSignature().toShortString());
                 log.info("* - Total run time : {}", stopWatch.getTotalTimeSeconds());
                 log.info("******************************************************");
