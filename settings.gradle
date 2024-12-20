@@ -1,6 +1,6 @@
 rootProject.name = 'multi-module'
-include 'module-web'
-include 'module-app'
+include 'module-service-web'
+include 'module-service-app'
 include 'module-common'
 include 'module-security'
 include 'module-mybatis-h2'
