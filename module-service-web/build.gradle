@@ -5,6 +5,7 @@ group 'com.framework'
 version '0.0.1-SNAPSHOT'
 
 dependencies {
+    //프레임웍 공통
     implementation  project(':module-common')
     //redis 사용시
     implementation  project(':module-redis')

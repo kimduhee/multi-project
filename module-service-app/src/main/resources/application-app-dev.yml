@@ -6,3 +6,8 @@ spring:
   application:
     name: app
 
+logging:
+  level:
+    com.framework: debug
+    org.springframework.web: info
+    root: info

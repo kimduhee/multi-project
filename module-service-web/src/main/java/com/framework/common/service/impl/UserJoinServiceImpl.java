@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,10 +18,11 @@ public class UserJoinServiceImpl implements UserJoinService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public int join(UserJoinSInDto sInDto) {
+    @Transactional(readOnly=true, rollbackFor=Exception.class)
+    public void join(UserJoinSInDto sInDto) {
         sInDto.setUserRole("ROLE_USER");
         sInDto.setUserPassword(bCryptPasswordEncoder.encode(sInDto.getUserPassword()));
-        return userJoinMapper.join(sInDto);
+        userJoinMapper.join(sInDto);
     }
 
 }

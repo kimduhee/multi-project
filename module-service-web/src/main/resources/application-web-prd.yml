@@ -6,9 +6,6 @@ spring:
   application:
     name: web
 
-login:
-  user-check: jpa
-
 logging:
   level:
     com.framework: debug

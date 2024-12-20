@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class JWTInfo {
     private String userAccessToken;
     private String userRefreshToken;
