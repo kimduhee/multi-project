@@ -2,12 +2,11 @@ package com.framework.common.util;
 
 import com.framework.common.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -68,6 +67,134 @@ public class RedisUtil<T> {
             redisTemplate.delete(key + ":string");
         } catch(Exception e) {
             log.error("deleteAllRedisStirngData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 List 값 저장(기존 데이터 뒤에 저장)
+     * @param key
+     * @param value
+     * @param <T>
+     * @throws Exception
+     */
+    public static <T> void setRedisListRightPushData(String key, T value) throws Exception {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            ListOperations<String, T> listOperations = redisTemplate.opsForList();
+            listOperations.rightPush(key + ":list", value);
+        } catch(Exception e) {
+            log.error("setRedisListRightPushData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 List 값 저장(기존 데이터 앞에 저장)
+     * @param key
+     * @param value
+     * @param <T>
+     * @throws Exception
+     */
+    public static <T> void setRedisListLeftPushData(String key, T value) throws Exception {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            ListOperations<String, T> listOperations = redisTemplate.opsForList();
+            listOperations.leftPush(key + ":list", value);
+        } catch(Exception e) {
+            log.error("setRedisListLeftPushData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 List index에 해당하는 데이터 값을 변경
+     * @param key
+     * @param index
+     * @param value
+     * @param <T>
+     * @throws Exception
+     */
+    public static <T> void setRedisListUpdateData(String key, int index, T value) throws Exception {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            ListOperations<String, T> listOperations = redisTemplate.opsForList();
+            listOperations.set(key + ":list", index, value);
+        } catch(Exception e) {
+            log.error("setRedisListUpdateData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 List 단건 조회
+     * @param key
+     * @param index
+     * @return
+     * @param <T>
+     * @throws Exception
+     */
+    public static <T> T getOneRedisListData(String key, int index) throws Exception {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            ListOperations<String, T> listOperations = redisTemplate.opsForList();
+            return listOperations.index(key + ":list", index);
+        } catch(Exception e) {
+            log.error("getOneRedisListData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 List 범위값 조회
+     * @param key
+     * @param start
+     * @param end
+     * @return
+     * @param <T>
+     * @throws Exception
+     */
+    public static <T> List<T> getRangeRedisListData(String key, int start, int end) throws Exception {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            ListOperations<String, T> listOperations = redisTemplate.opsForList();
+            return listOperations.range(key + ":list", start, end);
+        } catch(Exception e) {
+            log.error("getRangeRedisListData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 List size 조회
+     * @param key
+     * @return
+     * @param <T>
+     * @throws Exception
+     */
+    public static <T> Long getSizeRedisListData(String key) throws Exception {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            ListOperations<String, T> listOperations = redisTemplate.opsForList();
+
+            return listOperations.size(key + ":list");
+        } catch(Exception e) {
+            log.error("getSizeRedisListData exception :: ", e);
+            throw new BizException(e);
+        }
+    }
+
+    /**
+     * key에 대한 list 모든값 삭제
+     * @param key
+     * @param <T>
+     */
+    public static <T> void deleteAllRedisListData(String key) {
+        try {
+            RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            redisTemplate.delete(key + ":list");
+        } catch(Exception e) {
+            log.error("deleteAllRedisListData exception :: ", e);
             throw new BizException(e);
         }
     }
@@ -135,7 +262,7 @@ public class RedisUtil<T> {
             SetOperations<String, T> setOperations = redisTemplate.opsForSet();
             setOperations.remove(key + ":set", value);
         } catch(Exception e) {
-            log.error("deleteAllRedisSetData exception :: ", e);
+            log.error("deleteOneRedisSetData exception :: ", e);
             throw new BizException(e);
         }
     }
