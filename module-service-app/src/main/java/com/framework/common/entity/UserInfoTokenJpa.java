@@ -38,11 +38,11 @@ public class UserInfoTokenJpa {
     @Column(name = "USER_REFRESH_TOKEN", length = 200, nullable = true)
     private String userRefreshToken;
 
-    @Column(name = "REG_ID", length = 10, nullable = false)
+    @Column(name = "REG_ID", updatable = false, length = 10, nullable = false)
     private int regId;
 
     @CreationTimestamp
-    @Column(name="REG_DT", nullable = false)
+    @Column(name="REG_DT", updatable = false, nullable = false)
     private Date regDt;
 
     @Column(name="UPD_ID", length = 10, nullable = false)

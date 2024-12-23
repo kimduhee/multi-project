@@ -79,5 +79,6 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .userRefreshToken(saveJWT.getUserRefreshToken())
                 //.regId(saveJWT.getUserId())
                 .updId(saveJWT.getUserId()).build();
+        userInfoTokenRepository.save(userInfoTokenJpa);
     }
 }

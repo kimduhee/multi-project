@@ -46,8 +46,8 @@ public class DataBaseConfiguration {
 //        return new SqlSessionTemplate(sessionFactory);
 //    }
 
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource());
-    }
+//    @Bean
+//    public PlatformTransactionManager transactionManager() {
+//        return new DataSourceTransactionManager(dataSource());
+//    }
 }

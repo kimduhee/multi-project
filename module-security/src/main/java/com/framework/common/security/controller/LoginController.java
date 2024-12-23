@@ -97,6 +97,10 @@ public class LoginController {
         String userId =  JwtUtil.getUserId(token, secretKey);
         JWTInfo jWTInfo = userInfoService.getUserToken(String.valueOf(userId));
 
+        if(jWTInfo ==null) {
+            throw new BizException("ERRCOMLO000007");
+        }
+
         //로그아웃으로 토큰 삭제 상태
         if("logout".equals(jWTInfo.getUserRefreshToken())) {
             throw new BizException("ERRCOMLO000005");
