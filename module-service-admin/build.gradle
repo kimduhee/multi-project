@@ -13,6 +13,7 @@ dependencies {
     implementation  project(':module-jpa-h2')
     //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
     //jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 

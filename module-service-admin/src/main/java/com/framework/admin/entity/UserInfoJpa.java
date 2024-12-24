@@ -1,4 +1,4 @@
-package com.framework.common.entity;
+package com.framework.admin.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -51,11 +51,13 @@ public class UserInfoJpa {
     private Date updDt;
 
     @Builder
-    protected UserInfoJpa(String userEmail, String userName, String userNickname, String userPassword, String userRole) {
+    protected UserInfoJpa(String userEmail, String userName, String userNickname, String userPassword, String userRole, int regId, int updId) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userNickname = userNickname;
         this.userPassword = userPassword;
         this.userRole = userRole;
+        this.regId = regId;
+        this.updId = updId;
     }
 }

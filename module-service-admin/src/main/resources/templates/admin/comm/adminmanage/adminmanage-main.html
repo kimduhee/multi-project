@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--thymeleaf의 th라는 namespace를 추가한다.-->
+<html lang="" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{comm/layout/default-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- layout1.html 파일의 <div layout:fragment="content"> 영역에 들어가는 영역 -->
+<div layout:fragment="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">관리자 정보</strong>
+                    </div>
+                    <div class="card-body">
+                        <div id="bootstrap-data-table_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>아이디</th>
+                                                <th>이름</th>
+                                                <th>비밀번호</th>
+                                                <th>권한</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="adminmanageTbody">
+                                            <tr th:each="adminmanageList:${adminmanageList}">
+                                                <td th:text="${adminmanageList.adminId}"></td>
+                                                <td th:text="${adminmanageList.adminName}"></td>
+                                                <td th:text="${adminmanageList.adminPassword}"></td>
+                                                <td th:text="${adminmanageList.adminLevel}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <!--<div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div>-->
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="bootstrap-data-table_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled"><a href="#" class="page-link">처음</a></li>
+                                            <li class="paginate_button page-item active"><a href="#" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item next disabled"><a href="#" class="page-link">마지막</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    /*<![CDATA[*/
+    $( document ).ready(function() {
+        getAjaxData("/comm/adminmanage/adminmanage-list","", callback);
+    });
+
+    function callback(data) {
+        $("#adminmanageTbody").replaceWith(data);
+    }
+    /*]]>*/
+</script>
+</body>
+</html>
