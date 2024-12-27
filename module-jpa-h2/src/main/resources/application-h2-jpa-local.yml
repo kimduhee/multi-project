@@ -15,6 +15,10 @@ spring:
       # 접속주소(http://localhost:{port}/h2-console)
       path: /h2-console
 
+  sql:
+    init:
+      mode: always
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
@@ -25,7 +29,10 @@ spring:
       # update: 기존 테이블 구조 유지, 새로 추가된 컬럼만 테이블에 반영, 기존 컬럼속성이 변경
       # 되어도 테이블에 미반영
       # validate: DDL 쿼리를 실행하지 않고 엔티티와 테이블이 정상적으로 매핑되었는지만 확인
-      ddl-auto: create
+      ddl-auto: none
+
+    defer-datasource-initialization: true
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
