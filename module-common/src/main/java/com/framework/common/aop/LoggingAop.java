@@ -2,6 +2,7 @@ package com.framework.common.aop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framework.common.handler.CommonApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 @Slf4j
@@ -48,9 +51,13 @@ public class LoggingAop {
 
     @Before("controllerCut()")
     public void beforeParameterLog(JoinPoint joinPoint) {
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
         try {
             if(log.isInfoEnabled()) {
                 log.info("* Controller Start!");
+                log.info("* - path : {}", request.getRequestURI());
                 log.info("* - Method name : {}", getMethod(joinPoint));
             }
 
@@ -64,8 +71,11 @@ public class LoggingAop {
                 for(Object arg : args) {
                     if(log.isInfoEnabled()) {
                         log.info("* - Parameter type : {}", arg.getClass().getSimpleName());
-                        log.info("* - Parameter value :");
-                        log.info("* {}", objectMapper.writeValueAsString(arg));
+                        try {
+                            log.info("* - Parameter value : {}", objectMapper.writeValueAsString(arg));
+                        } catch(Exception e) {
+                            log.info("* - Parameter value : Not dto type");
+                        }
                     }
                 }
             }
