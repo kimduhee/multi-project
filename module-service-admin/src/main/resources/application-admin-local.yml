@@ -9,6 +9,11 @@ spring:
   thymeleaf:
     cache: false
 
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
 logging:
   level:
     com.framework: debug

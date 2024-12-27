@@ -1,10 +1,15 @@
 package com.framework.admin.controller.comm.dto;
 
-import lombok.*;
+import com.framework.admin.entity.AdminInfoJpa;
+import com.framework.common.dto.PageDto;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 /**
  * packageName    : com.framework.admin.controller.comm.dto
- * fileName       : AdminmanageListCOutDto
+ * fileName       : AdminManageListCOutDto
  * author         : NAMANOK
  * date           : 2024-12-24
  * description    :
@@ -15,12 +20,9 @@ import lombok.*;
  */
 @Getter
 @Setter
-@Builder
-@RequiredArgsConstructor
-@AllArgsConstructor
-public class AdminmanageListCOutDto {
-    private String adminId;
-    private String adminName;
-    private String adminPassword;
-    private String adminLevel;
+public class AdminManageListCOutDto {
+    private List<AdminInfoJpa> resultList;
+    private int pageNo;
+    private int pageSize;
+    private int totalPageCount;
 }
