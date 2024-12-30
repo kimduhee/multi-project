@@ -15,5 +15,5 @@ import lombok.Getter;
  */
 @Getter
 public class AdminManageDeleteCInDto {
-    private String adminId;
+    private int adminNo;
 }

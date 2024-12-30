@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 public class AdminManageUpdateCInDto {
-    private String adminId;
+    private int adminNo;
     private String adminName;
     private String adminPassword;
 }

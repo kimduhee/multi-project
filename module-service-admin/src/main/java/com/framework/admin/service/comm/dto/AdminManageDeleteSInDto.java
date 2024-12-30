@@ -17,5 +17,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AdminManageDeleteSInDto {
-    private String adminId;
+    private int adminNo;
 }

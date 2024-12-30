@@ -129,7 +129,7 @@
                     <div class="modal-body">
                         <div class="row form-group">
                             <div class="col-12 col-md-2">아이디</div>
-                            <div class="col-12 col-md-10"><span id="updateAdminIdTxt"></span><input type="hidden" id="updateAdminId" placeholder="아이디를 입력하세요." class="form-control form-control-sm"></div>
+                            <div class="col-12 col-md-10"><span id="updateAdminIdTxt"></span><input type="hidden" id="updateAdminNo" placeholder="아이디를 입력하세요." class="form-control form-control-sm"></div>
                         </div>
                         <div class="row form-group">
                             <div class="col-12 col-md-2"><label for="adminPassword" class="form-control-label">비밀번호</label></div>
@@ -177,8 +177,8 @@
             resultList += " <td>"+ item.adminName  +"</td>";
             resultList += " <td>"+ item.adminPassword  +"</td>";
             resultList += " <td>"+ item.adminLevel  +"</td>";
-            resultList += " <td><button type=\"submit\" class=\"btn btn-secondary btn-sm btn-block\" data-toggle=\"modal\" data-target=\"#updateModal\" onClick=\"goAdminDetail('"+item.adminId+"');\">수정</button></td>";
-            resultList += " <td><button type=\"submit\" class=\"btn btn-secondary btn-sm btn-block\" onClick=\"goAdminDelete('"+item.adminId+"');\">삭제</button></td>";
+            resultList += " <td><button type=\"submit\" class=\"btn btn-secondary btn-sm btn-block\" data-toggle=\"modal\" data-target=\"#updateModal\" onClick=\"goAdminDetail('"+item.adminNo+"');\">수정</button></td>";
+            resultList += " <td><button type=\"submit\" class=\"btn btn-secondary btn-sm btn-block\" onClick=\"goAdminDelete('"+item.adminNo+"');\">삭제</button></td>";
             resultList += "</tr>";
         });
 
@@ -186,15 +186,15 @@
         commonJs.paging(data.data.totalPageCount, data.data.pageNo, "adminListPage", "goPage");
     }
 
-    function goAdminDetail(adminId) {
+    function goAdminDetail(adminNo) {
         let adminDetail = {
-            "adminId" : adminId
+            "adminNo" : adminNo
         };
         commonJs.getAjaxData("/comm/admin-manage/admin-manage-detail", adminDetail, detailCallback);
     }
 
     function detailCallback(data) {
-        $("#updateAdminId").val(data.data.adminId);
+        $("#updateAdminNo").val(data.data.adminNo);
         $("#updateAdminIdTxt").html(data.data.adminId);
         $("#updateAdminPassword").val(data.data.adminPassword);
         $("#updateAdminName").val(data.data.adminName);
@@ -233,7 +233,7 @@
         }
 
         let adminUpdate = {
-            "adminId" : $("#updateAdminId").val(),
+            "adminNo" : $("#updateAdminNo").val(),
             "adminPassword" : $("#updateAdminPassword").val(),
             "adminName" : $("#updateAdminName").val()
         };
@@ -248,13 +248,13 @@
         goPage(1);
     }
 
-    function goAdminDelete(adminId) {
+    function goAdminDelete(adminNo) {
         if(!confirm("삭제 하시겠습니다.")) {
             return false;
         }
 
         let adminDelete = {
-            "adminId" : adminId
+            "adminNo" : adminNo
         };
         commonJs.getAjaxData("/comm/admin-manage/admin-manage-delete", adminDelete, deleteCallback);
     }

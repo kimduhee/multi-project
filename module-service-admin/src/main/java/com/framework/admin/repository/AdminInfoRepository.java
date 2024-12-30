@@ -22,6 +22,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface AdminInfoRepository extends JpaRepository<AdminInfoJpa, String>, JpaSpecificationExecutor<AdminInfoJpa> {
     Page<AdminInfoJpa> findAll(Specification<AdminInfoJpa> spec, Pageable pageable);
-    AdminInfoJpa findByAdminId(String adminId);
-    void deleteByAdminId(String adminId);
+    AdminInfoJpa findByAdminNo(int adminNo);
+    void deleteByAdminNo(int adminNo);
 }

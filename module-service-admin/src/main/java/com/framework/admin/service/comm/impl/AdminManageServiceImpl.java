@@ -47,6 +47,8 @@ public class AdminManageServiceImpl implements AdminManageService {
 
         Specification<AdminInfoJpa> spec = (root, query, criteriaBuilder) -> null;
 
+        spec = spec.and(AdminSpecification.notAdminId());
+
         if(!StringUtils.isEmpty(sInDto.getAdminId())) {
             spec = spec.and(AdminSpecification.likeAdminId(sInDto.getAdminId()));
         }
@@ -69,7 +71,7 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Override
     public AdminManageDetailSOutDto adminManageDetail(AdminManageDetailSInDto sInDto) {
         AdminManageDetailSOutDto sOutDto = new AdminManageDetailSOutDto();
-        AdminInfoJpa adminInfoJpa =  adminInfoRepository.findByAdminId(sInDto.getAdminId());
+        AdminInfoJpa adminInfoJpa =  adminInfoRepository.findByAdminNo(sInDto.getAdminNo());
         BeanUtils.copyProperties(adminInfoJpa, sOutDto );
         return sOutDto;
     }
@@ -85,6 +87,7 @@ public class AdminManageServiceImpl implements AdminManageService {
                 .adminId(sInDto.getAdminId())
                 .adminName(sInDto.getAdminName())
                 .adminPassword(sInDto.getAdminPassword())
+                .useYn("Y")
                 .build();
         adminInfoRepository.save(adminInfoJpa);
     }
@@ -96,8 +99,8 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
     @Override
     public void adminManageUpdate(AdminManageUpdateSInDto sInDto) {
-        AdminInfoJpa adminInfoJpa = adminInfoRepository.findByAdminId(sInDto.getAdminId());
-        adminInfoJpa.updateAdminInfo(sInDto.getAdminName(), sInDto.getAdminPassword(), sInDto.getAdminId());
+        AdminInfoJpa adminInfoJpa = adminInfoRepository.findByAdminNo(sInDto.getAdminNo());
+        adminInfoJpa.updateAdminInfo(sInDto.getAdminName(), sInDto.getAdminPassword(), "Y", sInDto.getAdminNo());
         //adminInfoRepository.save(adminInfoJpa);
     }
 
@@ -108,6 +111,6 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
     @Override
     public void adminManageDelete(AdminManageDeleteSInDto sInDto) {
-        adminInfoRepository.deleteByAdminId(sInDto.getAdminId());
+        adminInfoRepository.deleteByAdminNo(sInDto.getAdminNo());
     }
 }

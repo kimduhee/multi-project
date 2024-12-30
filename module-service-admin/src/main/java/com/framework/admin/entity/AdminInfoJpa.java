@@ -22,6 +22,9 @@ import java.util.Date;
 public class AdminInfoJpa {
 
     @Id
+    @Column(name="ADMIN_NO", nullable = false)
+    private int adminNo;
+
     @Column(name="ADMIN_ID", length = 20, nullable = false)
     private String adminId;
 
@@ -34,15 +37,18 @@ public class AdminInfoJpa {
     @Column(name = "ADMIN_LEVEL", length = 20, nullable = false)
     private String adminLevel;
 
-    @Column(name = "REG_ID", length = 20, nullable = false)
-    private String regId;
+    @Column(name = "USE_YN", length = 1, nullable = false)
+    private String useYn;
+
+    @Column(name = "REG_NO", nullable = false)
+    private int regNo;
 
     @CreationTimestamp
     @Column(name="REG_DT", updatable = false, nullable = false)
     private Timestamp regDt;
 
-    @Column(name="UPD_ID", length = 20, nullable = false)
-    private String updId;
+    @Column(name="UPD_NO", nullable = false)
+    private int updNo;
 
     @UpdateTimestamp
     //@LastModifiedDate
@@ -50,19 +56,21 @@ public class AdminInfoJpa {
     private Timestamp updDt;
 
     @Builder
-    protected AdminInfoJpa(String adminId, String adminName, String adminPassword, String adminLevel, String regId, String updId) {
+    protected AdminInfoJpa(String adminId, String adminName, String adminPassword, String adminLevel, String useYn, int regNo, int updNo) {
         this.adminId = adminId;
         this.adminName = adminName;
         this.adminPassword = adminPassword;
         this.adminLevel = adminLevel;
-        this.regId = regId;
-        this.updId = updId;
+        this.useYn = useYn;
+        this.regNo = regNo;
+        this.updNo = updNo;
     }
 
-    public void updateAdminInfo(String adminName, String adminPassword, String updId) {
+    public void updateAdminInfo(String adminName, String adminPassword, String useYn, int updNo) {
         this.adminName = adminName;
         this.adminPassword = adminPassword;
+        this.useYn = useYn;
         //this.adminLevel = adminLevel;
-        this.updId = updId;
+        this.updNo = updNo;
     }
 }
