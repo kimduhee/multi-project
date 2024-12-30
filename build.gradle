@@ -25,16 +25,19 @@ subprojects {
 	}
 
 	dependencies {
+		//validation lib
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		//웹요청 처리 lib
 		implementation 'org.springframework.boot:spring-boot-starter-web'
-		implementation 'commons-io:commons-io:2.5'
+		//입.출력 lib
+		implementation 'commons-io:commons-io:2.7'
 
 		//lombok
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
+		//@ConfigurationProperties를 사용하기 위한 lib
 		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//		testImplementation 'io.projectreactor:reactor-test'
 	}
 
 	configurations {
