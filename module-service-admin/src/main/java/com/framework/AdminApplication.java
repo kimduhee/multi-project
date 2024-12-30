@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages= "com.framework")
 public class AdminApplication {
     public static void main(String[] args) {
-        System.setProperty("spring.config.name", "application,application-h2-jpa,application-admin");
+        System.setProperty("spring.config.name", "application-common,application-h2-jpa,application-admin");
         SpringApplication.run(AdminApplication.class, args);
     }
 }
