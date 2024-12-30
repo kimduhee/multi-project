@@ -37,6 +37,7 @@ subprojects {
 		annotationProcessor 'org.projectlombok:lombok'
 		//@ConfigurationProperties를 사용하기 위한 lib
 		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+		//Junit 및 Test lib
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	}
 
