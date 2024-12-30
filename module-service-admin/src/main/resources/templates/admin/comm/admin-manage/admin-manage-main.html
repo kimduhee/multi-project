@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<!--thymeleaf의 th라는 namespace를 추가한다.-->
 <html lang="" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{comm/layout/default-layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>관리자관리</title>
 </head>
 <body>
 <!-- layout1.html 파일의 <div layout:fragment="content"> 영역에 들어가는 영역 -->
@@ -60,36 +59,23 @@
                                                 <th>이름</th>
                                                 <th>비밀번호</th>
                                                 <th>권한</th>
+                                                <th>수정</th>
+                                                <th>삭제</th>
                                             </tr>
                                         </thead>
                                         <tbody id="adminManageTbody">
-                                            <tr th:each="adminList:${adminManageList}">
-                                                <td th:text="${adminList.adminId}"></td>
-                                                <td th:text="${adminList.adminName}"></td>
-                                                <td th:text="${adminList.adminPassword}"></td>
-                                                <td th:text="${adminList.adminLevel}"></td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            <div class="row" id="getAdminList">
-                                <!--
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous disabled"><a href="#" class="page-link">처음</a></li>
-                                            <li class="paginate_button page-item active"><a href="javascript:goPage(1)" class="page-link">1</a></li>
-                                            <li class="paginate_button page-item next disabled"><a href="#" class="page-link">마지막</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                -->
-                            </div>
+                            <!-- 관리자 목록 페이징 영역 -->
+                            <div class="row" id="adminListPage"></div>
+
                             <div class="row">
                                 <div class="col-sm-12 col-md-5"></div>
-                                <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn btn-outline-secondary btn-sm btn-block" data-toggle="modal" data-target="#largeModal">관리자 등록</button></div>
+                                <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn btn-outline-secondary btn-sm btn-block" data-toggle="modal" data-target="#saveModal" onClick="initAdminRegForm();">관리자 등록</button></div>
                                 <div class="col-sm-12 col-md-5"></div>
                             </div>
                         </div>
@@ -98,12 +84,13 @@
             </div>
         </div>
 
-        <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+        <!-- 관리자 등록 팝업 -->
+        <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="largeModalLabel">관리자 등록</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="popCloseId">
+                        <h5 class="modal-title" id="saveModalLabel">관리자 등록</h5>
+                        <button type="button" id="saveCloseId" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -129,10 +116,43 @@
             </div>
         </div>
 
+        <!-- 관리자 수정 팝업 -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">관리자 수정</h5>
+                        <button type="button" id="updateCloseId" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row form-group">
+                            <div class="col-12 col-md-2">아이디</div>
+                            <div class="col-12 col-md-10"><span id="updateAdminIdTxt"></span><input type="hidden" id="updateAdminId" placeholder="아이디를 입력하세요." class="form-control form-control-sm"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12 col-md-2"><label for="adminPassword" class="form-control-label">비밀번호</label></div>
+                            <div class="col-12 col-md-10"><input type="password" id="updateAdminPassword" placeholder="비밀번호를 입력하세요." class="form-control form-control-sm"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12 col-md-2"><label for="adminName" class="form-control-label">이름</label></div>
+                            <div class="col-12 col-md-10"><input type="text" id="updateAdminName" placeholder="이름을 입력하세요." class="form-control form-control-sm"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" onClick="goAdminUpdate();">수정</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-
-<script layout:fragment="script" th:inline="javascript">
+<th:block layout:fragment="script" >
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>-->
+<script>
     /*<![CDATA[*/
     $( document ).ready(function() {
         goPage(1);
@@ -149,7 +169,6 @@
     }
 
     function listCallback(data) {
-        //$("#adminmanageTbody").replaceWith(data.resultList);
         let resultList = "";
 
         $.each(data.data.resultList, function(index, item) {
@@ -158,14 +177,40 @@
             resultList += " <td>"+ item.adminName  +"</td>";
             resultList += " <td>"+ item.adminPassword  +"</td>";
             resultList += " <td>"+ item.adminLevel  +"</td>";
+            resultList += " <td><button type=\"submit\" class=\"btn btn-secondary btn-sm btn-block\" data-toggle=\"modal\" data-target=\"#updateModal\" onClick=\"goAdminDetail('"+item.adminId+"');\">수정</button></td>";
+            resultList += " <td><button type=\"submit\" class=\"btn btn-secondary btn-sm btn-block\" onClick=\"goAdminDelete('"+item.adminId+"');\">삭제</button></td>";
             resultList += "</tr>";
         });
 
         $("#adminManageTbody").html(resultList);
-        commonJs.paging(data.data.totalPageCount, data.data.pageNo, "getAdminList", "goPage");
+        commonJs.paging(data.data.totalPageCount, data.data.pageNo, "adminListPage", "goPage");
+    }
+
+    function goAdminDetail(adminId) {
+        let adminDetail = {
+            "adminId" : adminId
+        };
+        commonJs.getAjaxData("/comm/admin-manage/admin-manage-detail", adminDetail, detailCallback);
+    }
+
+    function detailCallback(data) {
+        $("#updateAdminId").val(data.data.adminId);
+        $("#updateAdminIdTxt").html(data.data.adminId);
+        $("#updateAdminPassword").val(data.data.adminPassword);
+        $("#updateAdminName").val(data.data.adminName);
+    }
+
+    function initAdminRegForm() {
+        $("#adminId").val("");
+        $("#adminPassword").val("");
+        $("#adminName").val("");
     }
 
     function goAdminSave() {
+        if(!confirm("등록 하시겠습니다.")) {
+            return false;
+        }
+
         let adminSave = {
             "adminId" : $("#adminId").val(),
             "adminPassword" : $("#adminPassword").val(),
@@ -178,9 +223,50 @@
         if(data.data.result == "success") {
             alert("정상적으로 등록되었습니다.");
         }
-        $("#popCloseId").trigger("click");
+        $("#saveCloseId").trigger("click");
+        goPage(1);
+    }
+
+    function goAdminUpdate() {
+        if(!confirm("수정 하시겠습니다.")) {
+            return false;
+        }
+
+        let adminUpdate = {
+            "adminId" : $("#updateAdminId").val(),
+            "adminPassword" : $("#updateAdminPassword").val(),
+            "adminName" : $("#updateAdminName").val()
+        };
+        commonJs.getAjaxData("/comm/admin-manage/admin-manage-update", adminUpdate, updateCallback);
+    }
+
+    function updateCallback(data) {
+        if(data.data.result == "success") {
+            alert("정상적으로 수정되었습니다.");
+        }
+        $("#updateCloseId").trigger("click");
+        goPage(1);
+    }
+
+    function goAdminDelete(adminId) {
+        if(!confirm("삭제 하시겠습니다.")) {
+            return false;
+        }
+
+        let adminDelete = {
+            "adminId" : adminId
+        };
+        commonJs.getAjaxData("/comm/admin-manage/admin-manage-delete", adminDelete, deleteCallback);
+    }
+
+    function deleteCallback(data) {
+        if(data.data.result == "success") {
+            alert("정상적으로 삭제되었습니다.");
+        }
+        goPage(1);
     }
     /*]]>*/
 </script>
+</th:block>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Frame Admin</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
@@ -23,8 +23,7 @@
 
     <link rel="stylesheet" href="/css/weathericons-2_1_0/weather-icons.css" />
     <link rel="stylesheet" href="/css/fullcalendar-3_9_0/fullcalendar.min.css" />
-
-
+    <th:block layout:fragment="link"></th:block>
 </head>
 <body>
 
@@ -274,10 +273,11 @@
     <script type="text/javascript" src="/assets/js/main.js"></script>
 
     <!--  Chart js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>-->
 
-
-    <script layout:fragment="script" th:inline="javascript"></script>
+    <!--<th:block th:replace="${scripts}" />-->
+    <th:block layout:fragment="script"></th:block>
+    <!--<script layout:fragment="script" th:inline="javascript"></script>-->
 <!-- /#right-panel -->
 </body>
 </html>

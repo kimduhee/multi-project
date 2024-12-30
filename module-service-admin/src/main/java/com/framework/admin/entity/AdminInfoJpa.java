@@ -6,14 +6,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name="ADMIN_INFO")
 @Entity
+@DynamicUpdate
 public class AdminInfoJpa {
 
     @Id
@@ -34,14 +39,15 @@ public class AdminInfoJpa {
 
     @CreationTimestamp
     @Column(name="REG_DT", updatable = false, nullable = false)
-    private Date regDt;
+    private Timestamp regDt;
 
     @Column(name="UPD_ID", length = 20, nullable = false)
     private String updId;
 
     @UpdateTimestamp
+    //@LastModifiedDate
     @Column(name = "UPD_DT", nullable = false)
-    private Date updDt;
+    private Timestamp updDt;
 
     @Builder
     protected AdminInfoJpa(String adminId, String adminName, String adminPassword, String adminLevel, String regId, String updId) {
@@ -50,6 +56,13 @@ public class AdminInfoJpa {
         this.adminPassword = adminPassword;
         this.adminLevel = adminLevel;
         this.regId = regId;
+        this.updId = updId;
+    }
+
+    public void updateAdminInfo(String adminName, String adminPassword, String updId) {
+        this.adminName = adminName;
+        this.adminPassword = adminPassword;
+        //this.adminLevel = adminLevel;
         this.updId = updId;
     }
 }

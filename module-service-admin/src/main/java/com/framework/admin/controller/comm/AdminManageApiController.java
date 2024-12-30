@@ -3,9 +3,7 @@ package com.framework.admin.controller.comm;
 import com.framework.admin.controller.comm.dto.*;
 import com.framework.admin.entity.AdminInfoJpa;
 import com.framework.admin.service.comm.AdminManageService;
-import com.framework.admin.service.comm.dto.AdminManageListSInDto;
-import com.framework.admin.service.comm.dto.AdminManageSaveSInDto;
-import com.framework.admin.service.comm.dto.AdminManageUpdateSInDto;
+import com.framework.admin.service.comm.dto.*;
 import com.framework.common.handler.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +68,27 @@ public class AdminManageApiController {
     }
 
     /**
+     * 관리자 상세 조회
+     *
+     * @param model
+     * @param cInDto
+     * @return
+     */
+    @PostMapping(value = "/comm/admin-manage/admin-manage-detail", produces = "application/json; charset=utf-8")
+    public ResponseEntity<CommonApiResponse> adminManageDetail(Model model, @RequestBody AdminManageDetailCInDto cInDto) {
+
+        AdminManageDetailCOutDto cOutDto = new AdminManageDetailCOutDto();
+
+        AdminManageDetailSInDto sInDto = new AdminManageDetailSInDto();
+
+        BeanUtils.copyProperties(cInDto, sInDto);
+        AdminManageDetailSOutDto sOutDto= adminManageService.adminManageDetail(sInDto);
+        BeanUtils.copyProperties(sOutDto, cOutDto);
+
+        return new ResponseEntity<>(CommonApiResponse.ok(cOutDto), HttpStatus.OK);
+    }
+
+    /**
      * 관리자 등록
      *
      * @param model
@@ -104,6 +123,26 @@ public class AdminManageApiController {
         AdminManageUpdateSInDto sInDto = new AdminManageUpdateSInDto();
         BeanUtils.copyProperties(cInDto, sInDto);
         adminManageService.adminManageUpdate(sInDto);
+
+        cOutDto.setResult("success");
+
+        return new ResponseEntity<>(CommonApiResponse.ok(cOutDto), HttpStatus.OK);
+    }
+
+    /**
+     * 관지자 삭제
+     * @param model
+     * @param cInDto
+     * @return
+     */
+    @PostMapping(value = "/comm/admin-manage/admin-manage-delete", produces = "application/json; charset=utf-8")
+    public ResponseEntity<CommonApiResponse> adminManageDelete(Model model, @RequestBody AdminManageDeleteCInDto cInDto) {
+
+        AdminManageDeleteCOutDto cOutDto = new AdminManageDeleteCOutDto();
+
+        AdminManageDeleteSInDto sInDto = new AdminManageDeleteSInDto();
+        BeanUtils.copyProperties(cInDto, sInDto);
+        adminManageService.adminManageDelete(sInDto);
 
         cOutDto.setResult("success");
 

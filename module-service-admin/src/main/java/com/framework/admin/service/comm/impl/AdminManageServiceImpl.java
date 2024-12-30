@@ -4,14 +4,14 @@ import com.framework.admin.entity.AdminInfoJpa;
 import com.framework.admin.repository.AdminInfoRepository;
 import com.framework.admin.repository.AdminSpecification;
 import com.framework.admin.service.comm.AdminManageService;
-import com.framework.admin.service.comm.dto.AdminManageListSInDto;
-import com.framework.admin.service.comm.dto.AdminManageSaveSInDto;
-import com.framework.admin.service.comm.dto.AdminManageUpdateSInDto;
+import com.framework.admin.service.comm.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -54,10 +54,24 @@ public class AdminManageServiceImpl implements AdminManageService {
             spec = spec.and(AdminSpecification.likeAdminName(sInDto.getAdminName()));
         }
 
-        Pageable pageable = PageRequest.of(sInDto.getPageNo()-1, sInDto.getPageSize());
+        Pageable pageable = PageRequest.of(sInDto.getPageNo()-1, sInDto.getPageSize(), Sort.by("updDt").descending());
 
         Page<AdminInfoJpa> adminList =  adminInfoRepository.findAll(spec, pageable);
         return adminList;
+    }
+
+    /**
+     * 관리자 상세 조회
+     * @param sInDto
+     * @return
+     */
+    @Transactional(readOnly=true, rollbackFor=Exception.class)
+    @Override
+    public AdminManageDetailSOutDto adminManageDetail(AdminManageDetailSInDto sInDto) {
+        AdminManageDetailSOutDto sOutDto = new AdminManageDetailSOutDto();
+        AdminInfoJpa adminInfoJpa =  adminInfoRepository.findByAdminId(sInDto.getAdminId());
+        BeanUtils.copyProperties(adminInfoJpa, sOutDto );
+        return sOutDto;
     }
 
     /**
@@ -82,9 +96,18 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
     @Override
     public void adminManageUpdate(AdminManageUpdateSInDto sInDto) {
-        AdminInfoJpa adminInfoJpa = AdminInfoJpa.builder()
-//TODO 구현필요
-                .build();
-        adminInfoRepository.save(adminInfoJpa);
+        AdminInfoJpa adminInfoJpa = adminInfoRepository.findByAdminId(sInDto.getAdminId());
+        adminInfoJpa.updateAdminInfo(sInDto.getAdminName(), sInDto.getAdminPassword(), sInDto.getAdminId());
+        //adminInfoRepository.save(adminInfoJpa);
+    }
+
+    /**
+     * 관리자 삭제
+     * @param sInDto
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
+    @Override
+    public void adminManageDelete(AdminManageDeleteSInDto sInDto) {
+        adminInfoRepository.deleteByAdminId(sInDto.getAdminId());
     }
 }

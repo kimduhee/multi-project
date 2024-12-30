@@ -1,6 +1,8 @@
 package com.framework.admin.repository;
 
 import com.framework.admin.entity.AdminInfoJpa;
+import com.framework.admin.service.comm.dto.AdminManageDetailSInDto;
+import com.framework.admin.service.comm.dto.AdminManageDetailSOutDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,4 +22,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface AdminInfoRepository extends JpaRepository<AdminInfoJpa, String>, JpaSpecificationExecutor<AdminInfoJpa> {
     Page<AdminInfoJpa> findAll(Specification<AdminInfoJpa> spec, Pageable pageable);
+    AdminInfoJpa findByAdminId(String adminId);
+    void deleteByAdminId(String adminId);
 }
