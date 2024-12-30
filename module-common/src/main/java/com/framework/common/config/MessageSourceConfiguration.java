@@ -11,6 +11,19 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+/**
+ * packageName    : com.framework.common.config
+ * fileName       : MessageSourceConfiguration
+ * author         : NAMANOK
+ * date           : 2024-12-30
+ * description    :
+ *  메세지 처리 설정
+ * -공통에러, security에러, 서비스 에러 설정
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2024-12-30        NAMANOK       최초 생성
+ */
 @Configuration
 @RequiredArgsConstructor
 public class MessageSourceConfiguration {

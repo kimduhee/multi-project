@@ -16,7 +16,21 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-
+/**
+ * packageName    : com.framework.common.aop
+ * fileName       : LoggingAop
+ * author         : NAMANOK
+ * date           : 2024-12-30
+ * description    :
+ *  AOP 설정
+ * -local 및 dev 환경에서만 적용됨
+ * -request 및 response 값 로그적용
+ * -최종 서비스 처리 시간 측정
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2024-12-30        NAMANOK       최초 생성
+ */
 @Slf4j
 @Aspect
 @Component

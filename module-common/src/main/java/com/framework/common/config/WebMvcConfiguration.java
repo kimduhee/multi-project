@@ -21,7 +21,11 @@ import java.util.concurrent.Executor;
  * fileName       : WebMvcConfiguration
  * author         : NAMANOK
  * date           : 2024-12-19
- * description    : 웹 MVC 사용자 설정 class
+ * description    : 
+ * 웹 MVC 사용자 설정 class
+ * -resource 설정
+ * -interceptor 설정
+ * -Xss filter 적용
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

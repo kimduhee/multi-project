@@ -11,7 +11,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Swagger 설정
+ * packageName    : com.framework.common.config
+ * fileName       : SwaggerConfiguration
+ * author         : NAMANOK
+ * date           : 2024-12-30
+ * description    :
+ *  swagger 설정
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2024-12-30        NAMANOK       최초 생성
  */
 @OpenAPIDefinition(
         info = @Info(
