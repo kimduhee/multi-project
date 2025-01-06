@@ -56,3 +56,4 @@ redis를 사용하기 위한 설정 및 UTIL 모듈
 + 기본적으로 [local], [dev], [stg], [prd] 로 구성되어 있으며 다음과 같은 환경변수를 적용해준다
 <pre><code>-Dspring.profiles.active=[환경변수값]</code></pre>
 - - -
+- - -
