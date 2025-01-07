@@ -1,6 +1,7 @@
 package com.framework.common.service;
 
 import com.framework.common.config.ProducerConfiguration;
+import com.framework.common.constant.TopicEnum;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +33,9 @@ public class ProducerService {
         producer = new KafkaProducer<>(properties);
     }
 
-    public void send(String message) {
+    public void send(String message, TopicEnum topicEnum) {
         //TODO topic명은 enum에서 불러오자
-        ProducerRecord<String, String> record = new ProducerRecord<>("", message);
+        ProducerRecord<String, String> record = new ProducerRecord<>(topicEnum.getTopicName(), message);
 
         producer.send(record, new Callback() {
             @Override
@@ -50,5 +51,9 @@ public class ProducerService {
                 }
             }
         });
+    }
+
+    public void test1() {
+        send("", TopicEnum.TEST_TOPIC_1);
     }
 }
