@@ -8,5 +8,4 @@ include 'module-jpa-h2'
 include 'module-redis'
 include 'module-service-admin'
 include 'module-kafka-producer'
-include 'module-kafka-producer'
 
