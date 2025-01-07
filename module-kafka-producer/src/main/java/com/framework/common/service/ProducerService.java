@@ -34,7 +34,7 @@ public class ProducerService {
     }
 
     public void send(String message, TopicEnum topicEnum) {
-        //TODO topic명은 enum에서 불러오자
+
         ProducerRecord<String, String> record = new ProducerRecord<>(topicEnum.getTopicName(), message);
 
         producer.send(record, new Callback() {
