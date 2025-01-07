@@ -62,10 +62,13 @@
 		.jstree({
             'core' : {
                 'data' : [
-                    { "text" : "카테고리", "children" : [
-                            { "text" : "Child node 1", "id" : "1"},
-                            { "text" : "Child node 2", "id" : "2" }
-                    ]}
+
+                    { "id" : "S1", "parent" : "#", "text" : "여행"},
+                    { "id" : "S2", "parent" : "#", "text" : "웹툰"},
+                    { "id" : "S3", "parent" : "#", "text" : "소설"},
+                    { "id" : "S11", "parent" : "S1", "text" : "유럽"},
+                    { "id" : "S12", "parent" : "S1", "text" : "아시아"}
+
                 ]
             }
         });
