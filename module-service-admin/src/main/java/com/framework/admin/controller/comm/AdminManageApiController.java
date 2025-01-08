@@ -1,7 +1,7 @@
 package com.framework.admin.controller.comm;
 
 import com.framework.admin.controller.comm.dto.*;
-import com.framework.admin.entity.AdminInfoJpa;
+import com.framework.admin.entity.AdminInfoEntity;
 import com.framework.admin.service.comm.AdminManageService;
 import com.framework.admin.service.comm.dto.*;
 import com.framework.common.handler.CommonApiResponse;
@@ -11,7 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,12 +37,11 @@ public class AdminManageApiController {
     /**
      * 관리자 목록 조회
      *
-     * @param model
      * @param cInDto
      * @return
      */
     @PostMapping(value = "/comm/admin-manage/admin-manage-list", produces = "application/json; charset=utf-8")
-    public ResponseEntity<CommonApiResponse> adminManageList(Model model, @RequestBody AdminManageListCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> adminManageList(@RequestBody AdminManageListCInDto cInDto) {
 
         AdminManageListCOutDto cOutDto = new AdminManageListCOutDto();
 
@@ -57,7 +55,7 @@ public class AdminManageApiController {
         }
 
         BeanUtils.copyProperties(cInDto, sInDto);
-        Page<AdminInfoJpa> resultList= adminManageService.adminManageList(sInDto);
+        Page<AdminInfoEntity> resultList= adminManageService.adminManageList(sInDto);
 
         cOutDto.setPageNo(cInDto.getPageNo());
         cOutDto.setPageSize(cInDto.getPageSize());
@@ -70,12 +68,11 @@ public class AdminManageApiController {
     /**
      * 관리자 상세 조회
      *
-     * @param model
      * @param cInDto
      * @return
      */
     @PostMapping(value = "/comm/admin-manage/admin-manage-detail", produces = "application/json; charset=utf-8")
-    public ResponseEntity<CommonApiResponse> adminManageDetail(Model model, @RequestBody AdminManageDetailCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> adminManageDetail(@RequestBody AdminManageDetailCInDto cInDto) {
 
         AdminManageDetailCOutDto cOutDto = new AdminManageDetailCOutDto();
 
@@ -91,12 +88,11 @@ public class AdminManageApiController {
     /**
      * 관리자 등록
      *
-     * @param model
      * @param cInDto
      * @return
      */
     @PostMapping(value = "/comm/admin-manage/admin-manage-save", produces = "application/json; charset=utf-8")
-    public ResponseEntity<CommonApiResponse> adminManageSave(Model model, @RequestBody AdminManageSaveCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> adminManageSave(@RequestBody AdminManageSaveCInDto cInDto) {
 
         AdminManageSaveCOutDto cOutDto = new AdminManageSaveCOutDto();
 
@@ -111,12 +107,11 @@ public class AdminManageApiController {
 
     /**
      * 관리자 수정
-     * @param model
      * @param cInDto
      * @return
      */
     @PostMapping(value = "/comm/admin-manage/admin-manage-update", produces = "application/json; charset=utf-8")
-    public ResponseEntity<CommonApiResponse> adminManageUpdate(Model model, @RequestBody AdminManageUpdateCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> adminManageUpdate(@RequestBody AdminManageUpdateCInDto cInDto) {
 
         AdminManageUpdateCOutDto cOutDto = new AdminManageUpdateCOutDto();
 
@@ -131,12 +126,11 @@ public class AdminManageApiController {
 
     /**
      * 관지자 삭제
-     * @param model
      * @param cInDto
      * @return
      */
     @PostMapping(value = "/comm/admin-manage/admin-manage-delete", produces = "application/json; charset=utf-8")
-    public ResponseEntity<CommonApiResponse> adminManageDelete(Model model, @RequestBody AdminManageDeleteCInDto cInDto) {
+    public ResponseEntity<CommonApiResponse> adminManageDelete(@RequestBody AdminManageDeleteCInDto cInDto) {
 
         AdminManageDeleteCOutDto cOutDto = new AdminManageDeleteCOutDto();
 

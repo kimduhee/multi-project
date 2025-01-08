@@ -1,6 +1,6 @@
 package com.framework.admin.repository;
 
-import com.framework.admin.entity.AdminInfoJpa;
+import com.framework.admin.entity.AdminInfoEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -16,18 +16,18 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class AdminSpecification {
 
-    public static Specification<AdminInfoJpa> notAdminId() {
+    public static Specification<AdminInfoEntity> notAdminId() {
         //TODO super admin 계정 설정관리 필요할듯
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.notEqual(root.get("adminId"), "admin");
     }
 
-    public static Specification<AdminInfoJpa> likeAdminId(String adminId) {
+    public static Specification<AdminInfoEntity> likeAdminId(String adminId) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.like(root.get("adminId"), "%" + adminId + "%");
     }
 
-    public static Specification<AdminInfoJpa> likeAdminName(String adminName) {
+    public static Specification<AdminInfoEntity> likeAdminName(String adminName) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.like(root.get("adminName"), "%" + adminName + "%");
     }

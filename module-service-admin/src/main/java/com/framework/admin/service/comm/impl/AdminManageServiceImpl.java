@@ -1,6 +1,6 @@
 package com.framework.admin.service.comm.impl;
 
-import com.framework.admin.entity.AdminInfoJpa;
+import com.framework.admin.entity.AdminInfoEntity;
 import com.framework.admin.repository.AdminInfoRepository;
 import com.framework.admin.repository.AdminSpecification;
 import com.framework.admin.service.comm.AdminManageService;
@@ -43,9 +43,9 @@ public class AdminManageServiceImpl implements AdminManageService {
      */
     @Transactional(readOnly=true, rollbackFor=Exception.class)
     @Override
-    public Page<AdminInfoJpa> adminManageList(AdminManageListSInDto sInDto) {
+    public Page<AdminInfoEntity> adminManageList(AdminManageListSInDto sInDto) {
 
-        Specification<AdminInfoJpa> spec = (root, query, criteriaBuilder) -> null;
+        Specification<AdminInfoEntity> spec = (root, query, criteriaBuilder) -> null;
 
         spec = spec.and(AdminSpecification.notAdminId());
 
@@ -58,7 +58,7 @@ public class AdminManageServiceImpl implements AdminManageService {
 
         Pageable pageable = PageRequest.of(sInDto.getPageNo()-1, sInDto.getPageSize(), Sort.by("updDt").descending());
 
-        Page<AdminInfoJpa> adminList =  adminInfoRepository.findAll(spec, pageable);
+        Page<AdminInfoEntity> adminList =  adminInfoRepository.findAll(spec, pageable);
         return adminList;
     }
 
@@ -71,7 +71,7 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Override
     public AdminManageDetailSOutDto adminManageDetail(AdminManageDetailSInDto sInDto) {
         AdminManageDetailSOutDto sOutDto = new AdminManageDetailSOutDto();
-        AdminInfoJpa adminInfoJpa =  adminInfoRepository.findByAdminNo(sInDto.getAdminNo());
+        AdminInfoEntity adminInfoJpa =  adminInfoRepository.findByAdminNo(sInDto.getAdminNo());
         BeanUtils.copyProperties(adminInfoJpa, sOutDto );
         return sOutDto;
     }
@@ -83,7 +83,7 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
     @Override
     public void adminManageSave(AdminManageSaveSInDto sInDto) {
-        AdminInfoJpa adminInfoJpa = AdminInfoJpa.builder()
+        AdminInfoEntity adminInfoJpa = AdminInfoEntity.builder()
                 .adminId(sInDto.getAdminId())
                 .adminName(sInDto.getAdminName())
                 .adminPassword(sInDto.getAdminPassword())
@@ -99,7 +99,7 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
     @Override
     public void adminManageUpdate(AdminManageUpdateSInDto sInDto) {
-        AdminInfoJpa adminInfoJpa = adminInfoRepository.findByAdminNo(sInDto.getAdminNo());
+        AdminInfoEntity adminInfoJpa = adminInfoRepository.findByAdminNo(sInDto.getAdminNo());
         adminInfoJpa.updateAdminInfo(sInDto.getAdminName(), sInDto.getAdminPassword(), "Y", sInDto.getAdminNo());
         //adminInfoRepository.save(adminInfoJpa);
     }

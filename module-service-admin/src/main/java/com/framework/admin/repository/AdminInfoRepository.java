@@ -1,8 +1,6 @@
 package com.framework.admin.repository;
 
-import com.framework.admin.entity.AdminInfoJpa;
-import com.framework.admin.service.comm.dto.AdminManageDetailSInDto;
-import com.framework.admin.service.comm.dto.AdminManageDetailSOutDto;
+import com.framework.admin.entity.AdminInfoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,8 +18,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * -----------------------------------------------------------
  * 2024-12-26        NAMANOK       최초 생성
  */
-public interface AdminInfoRepository extends JpaRepository<AdminInfoJpa, String>, JpaSpecificationExecutor<AdminInfoJpa> {
-    Page<AdminInfoJpa> findAll(Specification<AdminInfoJpa> spec, Pageable pageable);
-    AdminInfoJpa findByAdminNo(int adminNo);
+public interface AdminInfoRepository extends JpaRepository<AdminInfoEntity, String>, JpaSpecificationExecutor<AdminInfoEntity> {
+    Page<AdminInfoEntity> findAll(Specification<AdminInfoEntity> spec, Pageable pageable);
+    AdminInfoEntity findByAdminNo(int adminNo);
     void deleteByAdminNo(int adminNo);
 }

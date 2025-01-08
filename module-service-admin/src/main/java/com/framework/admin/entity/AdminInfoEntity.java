@@ -8,18 +8,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name="ADMIN_INFO")
 @Entity
 @DynamicUpdate
-public class AdminInfoJpa {
+public class AdminInfoEntity {
 
     @Id
     @Column(name="ADMIN_NO", nullable = false)
@@ -56,7 +53,7 @@ public class AdminInfoJpa {
     private Timestamp updDt;
 
     @Builder
-    protected AdminInfoJpa(String adminId, String adminName, String adminPassword, String adminLevel, String useYn, int regNo, int updNo) {
+    protected AdminInfoEntity(String adminId, String adminName, String adminPassword, String adminLevel, String useYn, int regNo, int updNo) {
         this.adminId = adminId;
         this.adminName = adminName;
         this.adminPassword = adminPassword;
