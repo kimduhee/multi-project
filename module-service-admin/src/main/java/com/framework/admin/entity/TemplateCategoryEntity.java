@@ -25,14 +25,14 @@ public class TemplateCategoryEntity {
     @Column(name="TEMP_CATE_NO", nullable = false)
     private int tempCateNo;
 
-    @Column(name="TEMP_PARENTS_CATE_ID", nullable = false)
-    private int tempPatentsCateId;
+    @Column(name="TEMP_PARENTS_CATE_NO", nullable = false)
+    private int tempParentsCateNo;
 
     @Column(name="TEMP_CATE_NAME", length = 100, nullable = false)
     private String tempCateName;
 
     @Column(name="USE_YN", length = 1, nullable = false)
-    private String userYn;
+    private String useYn;
 
     @Column(name = "TEMP_CATE_ORDER", nullable = false)
     private String tempCateOrder;
@@ -53,11 +53,11 @@ public class TemplateCategoryEntity {
     private Timestamp updDt;
 
     @Builder
-    protected TemplateCategoryEntity(int tempCateNo, int tempPatentsCateId, String tempCateName, String userYn, int regNo, int updNo) {
+    protected TemplateCategoryEntity(int tempCateNo, int tempParentsCateNo, String tempCateName, String useYn, int regNo, int updNo) {
         this.tempCateNo = tempCateNo;
-        this.tempPatentsCateId = tempPatentsCateId;
+        this.tempParentsCateNo = tempParentsCateNo;
         this.tempCateName = tempCateName;
-        this.userYn = userYn;
+        this.useYn = useYn;
         this.regNo = regNo;
         this.updNo = updNo;
     }

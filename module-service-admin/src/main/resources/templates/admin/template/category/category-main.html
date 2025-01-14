@@ -52,26 +52,40 @@
 <script src="/js/jtree/jstree.min.js"></script>
 <script>
     /*<![CDATA[*/
-
     $( document ).ready(function() {
-        $('#jstree_demo_div').on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-				alert('The selected node is: ' + data.instance.get_node(data.selected[0]).id);
-			}
-		})
-		.jstree({
-            'core' : {
-                'data' : [
 
-                    { "id" : "S1", "parent" : "#", "text" : "여행"},
-                    { "id" : "S2", "parent" : "#", "text" : "웹툰"},
-                    { "id" : "S3", "parent" : "#", "text" : "소설"},
-                    { "id" : "S11", "parent" : "S1", "text" : "유럽"},
-                    { "id" : "S12", "parent" : "S1", "text" : "아시아"}
+        function listCallback(data) {
 
-                ]
-            }
-        });
+            var cateData = new Array();
+
+            $.each(data.data.categoryList, function(idx, item) {
+                cateData[idx] = {'id':item.tempCateNo, 'parent':item.tempParentsCateNo=='0'?'#':item.tempParentsCateNo, 'text':item.tempCateName}
+            });
+
+            $('#jstree_demo_div').jstree({
+                core : {
+                    data : cateData
+                },
+                types : {
+                    'default' : {
+                        'icon' : 'jstree-folder'
+                    }
+                },
+                plugins : ['wholerow', 'types']
+            })
+            .bind('loaded.jstree', function(event, data) {
+
+            })
+            .bind('select_node.jstree', function(event, data) {
+                alert(data.instance.get_node(data.selected).id);
+            });
+
+            $('#jstree_demo_div').jstree("open_all");
+        }
+
+        let categorySearch = {
+        };
+        commonJs.getAjaxData("/template/category/category-list", categorySearch, listCallback);
     });
 
     /*]]>*/

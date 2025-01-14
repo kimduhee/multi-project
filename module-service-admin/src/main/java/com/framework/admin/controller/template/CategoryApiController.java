@@ -2,6 +2,7 @@ package com.framework.admin.controller.template;
 
 import com.framework.admin.controller.template.dto.CategoryListCInDto;
 import com.framework.admin.controller.template.dto.CategoryListCOutDto;
+import com.framework.admin.service.template.CategoryService;
 import com.framework.common.handler.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CategoryApiController {
 
+    private final CategoryService categoryService;
+
     @PostMapping(value = "/template/category/category-list", produces = "application/json; charset=utf-8")
     public ResponseEntity<CommonApiResponse> categoryList(@RequestBody CategoryListCInDto cInDto) {
 
         CategoryListCOutDto cOutDto = new CategoryListCOutDto();
+        cOutDto.setCategoryList(categoryService.categoryList());
+
         return new ResponseEntity<>(CommonApiResponse.ok(cOutDto), HttpStatus.OK);
     }
 }
