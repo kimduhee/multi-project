@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@ToString
 public class CommonApiResponse<T> {
 
     //응답 상태값
