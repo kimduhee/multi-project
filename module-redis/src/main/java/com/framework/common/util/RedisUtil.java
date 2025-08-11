@@ -18,6 +18,7 @@ import java.util.Set;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2024-12-19        NAMANOK       최초 생성
+ * - 추후 용도에 따라 key 및 value 검증 로직 필요
  */
 @Slf4j
 public class RedisUtil<T> {
@@ -28,7 +29,7 @@ public class RedisUtil<T> {
      * @param value
      * @throws Exception
      */
-    public static <T> void setRedisStringData(String key, T value) throws Exception {
+    public static <T> void setRedisStringData(String key, T value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ValueOperations<String, T> valueOperations = redisTemplate.opsForValue();
@@ -45,7 +46,7 @@ public class RedisUtil<T> {
      * @return
      * @throws Exception
      */
-    public static <T> T getRedisStringData(String key) throws Exception {
+    public static <T> T getRedisStringData(String key) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ValueOperations<String, T> valueOperations = redisTemplate.opsForValue();
@@ -77,7 +78,7 @@ public class RedisUtil<T> {
      * @param <T>
      * @throws Exception
      */
-    public static <T> void setRedisListRightPushData(String key, T value) throws Exception {
+    public static <T> void setRedisListRightPushData(String key, T value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
@@ -95,7 +96,7 @@ public class RedisUtil<T> {
      * @param <T>
      * @throws Exception
      */
-    public static <T> void setRedisListLeftPushData(String key, T value) throws Exception {
+    public static <T> void setRedisListLeftPushData(String key, T value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
@@ -114,7 +115,7 @@ public class RedisUtil<T> {
      * @param <T>
      * @throws Exception
      */
-    public static <T> void setRedisListUpdateData(String key, int index, T value) throws Exception {
+    public static <T> void setRedisListUpdateData(String key, int index, T value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
@@ -133,7 +134,7 @@ public class RedisUtil<T> {
      * @param <T>
      * @throws Exception
      */
-    public static <T> T getOneRedisListData(String key, int index) throws Exception {
+    public static <T> T getOneRedisListData(String key, int index) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
@@ -153,7 +154,7 @@ public class RedisUtil<T> {
      * @param <T>
      * @throws Exception
      */
-    public static <T> List<T> getRangeRedisListData(String key, int start, int end) throws Exception {
+    public static <T> List<T> getRangeRedisListData(String key, int start, int end) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
@@ -171,7 +172,7 @@ public class RedisUtil<T> {
      * @param <T>
      * @throws Exception
      */
-    public static <T> Long getSizeRedisListData(String key) throws Exception {
+    public static <T> Long getSizeRedisListData(String key) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
@@ -204,7 +205,7 @@ public class RedisUtil<T> {
      * @param value
      * @throws Exception
      */
-    public static <T> void setRedisSetData(String key, T... value) throws Exception {
+    public static <T> void setRedisSetData(String key, T... value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             SetOperations<String, T> setOperations = redisTemplate.opsForSet();
@@ -221,7 +222,7 @@ public class RedisUtil<T> {
      * @return
      * @throws Exception
      */
-    public static <T> Set<T> getRedisSetData(String key) throws Exception {
+    public static <T> Set<T> getRedisSetData(String key) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             SetOperations<String, T> setOperations = redisTemplate.opsForSet();
@@ -240,7 +241,7 @@ public class RedisUtil<T> {
      * @return
      * @throws Exception
      */
-    public static <T> boolean isExistsRedisSetData(String key, T value) throws Exception {
+    public static <T> boolean isExistsRedisSetData(String key, T value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             SetOperations<String, T> setOperations = redisTemplate.opsForSet();
@@ -287,7 +288,7 @@ public class RedisUtil<T> {
      * @param value
      * @throws Exception
      */
-    public static <T> void setRedisHashData(String key, String field, T value) throws Exception {
+    public static <T> void setRedisHashData(String key, String field, T value) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
@@ -304,7 +305,7 @@ public class RedisUtil<T> {
      * @return
      * @throws Exception
      */
-    public static <T> Map<String, T> getRedisHashData(String key) throws Exception {
+    public static <T> Map<String, T> getRedisHashData(String key) {
         try {
             RedisTemplate<String, T> redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
             HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
