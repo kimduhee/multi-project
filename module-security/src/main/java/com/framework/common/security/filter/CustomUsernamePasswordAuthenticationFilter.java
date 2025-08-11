@@ -58,8 +58,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         }
 
         try {
-            ObjectMapper om = new ObjectMapper();
-            UserInfo user = om.readValue(request.getInputStream(), UserInfo.class);
+            UserInfo user = objectMapper.readValue(request.getInputStream(), UserInfo.class);
 
             if(StringUtils.isEmpty(user.getUserEmail()) || StringUtils.isEmpty(user.getUserEmail())) {
                 request.setAttribute("AUTHENTICATION_FAIL", "ERRCOMLO000001");
